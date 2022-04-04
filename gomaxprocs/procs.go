@@ -29,5 +29,5 @@ func main() {
 		}()
 	}
 
-	time.Sleep(time.Hour)
+	time.Sleep(5 * time.Second)
 }
