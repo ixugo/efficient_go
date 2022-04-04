@@ -8,12 +8,6 @@ import (
 	"github.com/easierway/concurrent_map"
 )
 
-type Map interface {
-	Set(k, v any)
-	Get(any) (any, bool)
-	Del(any)
-}
-
 func benchmarkMap(b *testing.B, hm Map) {
 	for i := 0; i < b.N; i++ {
 		var wg sync.WaitGroup
