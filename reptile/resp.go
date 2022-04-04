@@ -12,6 +12,7 @@ type responseList struct {
 	List  []ListTile `json:"list"`
 }
 
+// ListTile 列表详情
 type ListTile struct {
 	Num              int         `json:"num"`
 	ResourceID       string      `json:"resource_id"`
@@ -45,15 +46,17 @@ type ResponseDetail struct {
 	Msg  string `json:"msg"`
 	Data Detail `json:"data"`
 }
+
+// Detail 视频详情
 type Detail struct {
 	ResourceID       string `json:"resource_id"`
 	ResourceType     int    `json:"resource_type"`
 	ProductTitle     string `json:"product_title"`
 	ProductID        string `json:"product_id"`
 	ProductType      int    `json:"product_type"`
-	Title            string `json:"title"`
-	Desc             string `json:"desc"`
-	VideoURL         string `json:"video_url"`
+	Title            string `json:"title"`     // 视频名称
+	Desc             string `json:"desc"`      // 视频描述
+	VideoURL         string `json:"video_url"` // 视频地址
 	ImgURL           string `json:"img_url"`
 	ImgURLCompressed string `json:"img_url_compressed"`
 	Summary          string `json:"summary"`

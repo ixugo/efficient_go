@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
@@ -26,14 +27,16 @@ const (
 type Reptile struct {
 	productID string
 	token     string
+	c         Copier // 拷贝
 }
 
 // NewReptile 创建该课程下载器
-func NewReptile(PID, token string) *Reptile {
+func NewReptile(PID, token string, c Copier) *Reptile {
 	_ = os.Mkdir(PID, os.ModePerm)
 	return &Reptile{
 		productID: PID,
 		token:     token,
+		c:         c,
 	}
 }
 
@@ -193,9 +196,21 @@ func (r *Reptile) GetFullDetails() ([]Detail, error) {
 	return details, nil
 }
 
+func writeBigFile(name string, src io.Reader) error {
+	file, err := os.Create(name + ".tmp")
+	if err != nil {
+		return err
+	}
+	// 优化: 避免大文件读取到内存(如视频)
+	if _, err = io.Copy(file, src); err != nil {
+		return err
+	}
+	return os.Rename(name+".tmp", name)
+}
+
 // SaveVideo 通过详情下载视频，保存到本地
 func (r *Reptile) SaveVideo(details []Detail) error {
-	ch := make(chan struct{}, 5)
+	ch := make(chan struct{}, runtime.NumCPU())
 	var wg sync.WaitGroup
 	for i, v := range details {
 		ch <- struct{}{}
@@ -205,16 +220,31 @@ func (r *Reptile) SaveVideo(details []Detail) error {
 				<-ch
 				wg.Done()
 			}()
-			fmt.Printf("第%02d课: %s\n", i+1, v.Title)
+			// fmt.Printf("第%02d课: %s\n", i+1, v.Title)
 			resp, err := http.Get(v.VideoURL)
+			defer func() {
+				_ = resp.Body.Close()
+			}()
 			if err != nil {
 				panic("发生错误: " + err.Error())
 			}
-			b, _ := io.ReadAll(resp.Body)
-			_ = resp.Body.Close()
-			idx := strings.LastIndex(v.VideoURL, ".")
+			total, _ := strconv.Atoi(resp.Header.Get("Content-Length"))
 
-			_ = os.WriteFile(r.VideoName(v.Title+v.VideoURL[idx:]), b, os.ModePerm)
+			idx := strings.LastIndex(v.VideoURL, ".")
+			name := r.VideoName(v.Title + v.VideoURL[idx:])
+
+			tmpName := name + ".tmp"
+			file, err := os.Create(tmpName)
+			if err != nil {
+				panic(err)
+			}
+			_, err = r.c.Copy(v.Title, int64(total), file, resp.Body)
+			if err != nil {
+				panic(err)
+			}
+			if err = os.Rename(tmpName, name); err != nil {
+				panic(err)
+			}
 		}(i, v)
 	}
 	wg.Wait()
