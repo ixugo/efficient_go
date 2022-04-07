@@ -1,8 +1,6 @@
-package func_test
+package gc
 
-import (
-	"testing"
-)
+import "testing"
 
 // TestStackCopy
 func TestStackCopy(t *testing.T) {
