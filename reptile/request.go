@@ -3,6 +3,7 @@ package reptile
 import (
 	"encoding/json"
 	"fmt"
+	"go_demo/reptile/bar"
 	"io"
 	"net/http"
 	"net/url"
@@ -27,11 +28,11 @@ const (
 type Reptile struct {
 	productID string
 	token     string
-	c         Copier // 拷贝
+	c         bar.Copier // 拷贝
 }
 
 // NewReptile 创建该课程下载器
-func NewReptile(PID, token string, c Copier) *Reptile {
+func NewReptile(PID, token string, c bar.Copier) *Reptile {
 	_ = os.Mkdir(PID, os.ModePerm)
 	return &Reptile{
 		productID: PID,

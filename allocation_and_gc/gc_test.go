@@ -9,6 +9,7 @@ type Content struct {
 // 避免内存分配和复制，可以减轻 gc 压力
 
 // BenchmarkTransferObj 复杂对象尽量传递引用
+
 func BenchmarkTransferObj(b *testing.B) {
 	var arr [10000]Content
 	// 值传递

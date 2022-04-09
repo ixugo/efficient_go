@@ -1,4 +1,4 @@
-package reptile
+package bar
 
 import (
 	"fmt"
@@ -35,8 +35,8 @@ func (m *Mpb) Wait() {
 }
 
 // Copy .
-func (m *Mpb) Copy(name string, total int64, dst io.Writer, src io.Reader) (written int64, err error) {
-	bar := m.p.New(total, mpb.BarStyle().Rbound("|"),
+func (m *Mpb) Copy(fileName string, fileSize int64, dst io.Writer, src io.Reader) (written int64, err error) {
+	bar := m.p.New(fileSize, mpb.BarStyle().Rbound("|"),
 		mpb.PrependDecorators(
 			decor.CountersKibiByte("% .1f / % .1f", decor.WCSyncWidthR),
 		),
@@ -46,7 +46,7 @@ func (m *Mpb) Copy(name string, total int64, dst io.Writer, src io.Reader) (writ
 			),
 			decor.Name(" ] "),
 			decor.EwmaSpeed(decor.UnitKiB, "% 2.1f", 60, decor.WCSyncWidthR),
-			decor.Name(fmt.Sprintf(" | %-20s", name), decor.WCSyncWidthR),
+			decor.Name(fmt.Sprintf(" | %-20s", fileName), decor.WCSyncWidthR),
 		))
 	proxyReader := bar.ProxyReader(src)
 	defer func() {
