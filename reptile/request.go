@@ -3,7 +3,6 @@ package reptile
 import (
 	"encoding/json"
 	"fmt"
-	"go_demo/reptile/bar"
 	"io"
 	"net/http"
 	"net/url"
@@ -12,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/ixugo/efficient_go/reptile/bar"
 )
 
 const (

@@ -1,5 +1,4 @@
-module go_demo
-
+module github.com/ixugo/efficient_go
 go 1.18
 
 require (

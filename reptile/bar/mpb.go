@@ -53,5 +53,4 @@ func (m *Mpb) Copy(fileName string, fileSize int64, dst io.Writer, src io.Reader
 		_ = proxyReader.Close()
 	}()
 	return io.Copy(dst, proxyReader)
-
 }

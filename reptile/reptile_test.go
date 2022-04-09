@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"go_demo/reptile/bar"
 	"io"
 
 	"net/http"
@@ -12,6 +11,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/ixugo/efficient_go/reptile/bar"
 	"github.com/stretchr/testify/require"
 )
 
