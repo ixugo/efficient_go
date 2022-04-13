@@ -8,6 +8,9 @@ import (
 	"github.com/easierway/concurrent_map"
 )
 
+// Go 内置三大引用类型之一
+// map
+
 func benchmarkMap(b *testing.B, hm Map) {
 	for i := 0; i < b.N; i++ {
 		var wg sync.WaitGroup

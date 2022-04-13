@@ -10,50 +10,59 @@ const (
 	columns = 10000
 )
 
+var total int
+
 // BenchmarkRowArray 访问效率更高
 func BenchmarkRowArray(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		writeArrayRow()
+		total = readArrayRow()
 	}
 }
 func BenchmarkColumnArray(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		writeArrayColumn()
+		total = reaedArrayColumn()
 	}
 }
 
 func BenchmarkList(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		writeList()
+		readList()
 	}
 }
 
 var array [rows][columns]int
 
-// writeArrayRow 先行后列处理
-func writeArrayRow() {
+// readArrayRow 先行后列处理
+func readArrayRow() int {
+	var total int
 	for i := 0; i < rows; i++ {
 		for j := 0; j < columns; j++ {
-			array[i][j] = 1
+			total += array[i][j]
 		}
 	}
+	return total
 }
 
-// writeArrayColumn 先列后行处理
-func writeArrayColumn() {
+// reaedArrayColumn 先列后行处理
+func reaedArrayColumn() int {
+	var total int
 	for i := 0; i < columns; i++ {
 		for j := 0; j < rows; j++ {
-			array[j][i] = 1
+			total += array[j][i]
 		}
 	}
+	return total
 }
 
-func writeList() {
+func readList() int {
 	cur := list
+
+	var total int
 	for cur != nil {
-		cur.v = 1
+		total += cur.v
 		cur = cur.next
 	}
+	return total
 }
 
 type node struct {

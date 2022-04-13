@@ -8,7 +8,8 @@ import (
 	"time"
 )
 
-// 管道案例
+// Go 内置三大引用类型之一
+// channel
 
 // TestCloseChannel 向已关闭的 channel 发送数据，会 panic
 func TestCloseChannel(t *testing.T) {
