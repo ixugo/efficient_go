@@ -9,11 +9,6 @@ import (
 	"github.com/vbauerster/mpb/v7/decor"
 )
 
-// Copier 实现 io.copy
-type Copier interface {
-	Copy(name string, total int64, dst io.Writer, src io.Reader) (written int64, err error)
-}
-
 // Mpb 该实现用于在实现 copy 的同时在终端显示进度
 type Mpb struct {
 	p *mpb.Progress

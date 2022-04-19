@@ -3,6 +3,7 @@ package reptile
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -10,8 +11,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-
-	"github.com/ixugo/efficient_go/reptile/bar"
 )
 
 const (
@@ -24,15 +23,21 @@ const (
 	detailsName = "details.json"
 )
 
+// Copier  需要实现 io.copy
+// 接口应由调用者提供，而非实现者。
+type Copier interface {
+	Copy(name string, total int64, dst io.Writer, src io.Reader) (written int64, err error)
+}
+
 // Reptile 某章书院课程下载器
 type Reptile struct {
-	ProductID  string
-	Token      string
-	bar.Copier // 拷贝
+	ProductID string
+	Token     string
+	Copier    // 拷贝
 }
 
 // NewReptile 创建该课程下载器
-func NewReptile(PID, token string, c bar.Copier) *Reptile {
+func NewReptile(PID, token string, c Copier) *Reptile {
 	_ = os.Mkdir(PID, os.ModePerm)
 	return &Reptile{
 		ProductID: PID,
