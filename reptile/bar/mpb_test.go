@@ -2,6 +2,7 @@ package bar
 
 import (
 	"crypto/rand"
+	"fmt"
 	"io"
 	"sync"
 	"testing"
@@ -44,4 +45,11 @@ func TestNewMpb(t *testing.T) {
 
 	wg.Wait()
 	p.Wait()
+}
+
+func TestSprintf(t *testing.T) {
+	fmt.Printf("'%-5s'\n", "嗨你好")
+	fmt.Printf("'% 3.1f'\n", 24.5234)
+	fmt.Printf("'% 3.1f | % 3.1f'\n", 24.5234, 245.4443)
+	fmt.Printf("'%.1f'\n", 234.5234)
 }

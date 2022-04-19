@@ -3,7 +3,6 @@ package reptile
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -27,67 +26,34 @@ const (
 
 // Reptile 某章书院课程下载器
 type Reptile struct {
-	productID string
-	token     string
-	c         bar.Copier // 拷贝
+	ProductID  string
+	Token      string
+	bar.Copier // 拷贝
 }
 
 // NewReptile 创建该课程下载器
 func NewReptile(PID, token string, c bar.Copier) *Reptile {
 	_ = os.Mkdir(PID, os.ModePerm)
 	return &Reptile{
-		productID: PID,
-		token:     token,
-		c:         c,
+		ProductID: PID,
+		Token:     token,
+		Copier:    c,
 	}
 }
 
 // ListName 列表名
 func (r *Reptile) ListName() string {
-	return r.productID + "/" + listName
+	return r.ProductID + "/" + listName
 }
 
 // DetailsName 每集视频详情
 func (r *Reptile) DetailsName() string {
-	return r.productID + "/" + detailsName
+	return r.ProductID + "/" + detailsName
 }
 
 // VideoName 每集视频名称
 func (r *Reptile) VideoName(name string) string {
-	return r.productID + "/" + name
-}
-
-func newRequest(url string, body io.Reader) (*http.Request, error) {
-	req, err := http.NewRequest(http.MethodPost, url, body)
-	if err != nil {
-		return nil, err
-	}
-	// TODO 浏览器是禁用设置 Referer，此处待确定是否有效
-	req.Header.Set("Referer", "http://yd.hzmedia.com.cn/")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) MicroMessenger/6.8.0(0x16080000) MacWechat/3.2.2(0x13020210) NetType/WIFI WindowsWechat")
-	return req, nil
-}
-
-func do(req *http.Request) ([]byte, error) {
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf(resp.Status)
-	}
-	b, err := io.ReadAll(resp.Body)
-	_ = resp.Body.Close()
-	return b, err
-}
-
-func writeFile[T any](t T, filename string) error {
-	b, err := json.MarshalIndent(t, "", "  ")
-	if err != nil {
-		return err
-	}
-	return os.WriteFile(filename, b, os.ModePerm)
+	return r.ProductID + "/" + name
 }
 
 // GetFullList 获取该课程的全部列表
@@ -122,13 +88,13 @@ func (r *Reptile) GetList(index, size string) (list ResponseList, err error) {
 		b   []byte
 	)
 	data := url.Values{
-		"product_id":    []string{r.productID},
+		"product_id":    []string{r.ProductID},
 		"page_index":    []string{index},
 		"page_size":     []string{size},
 		"order_by":      []string{"created_at:asc"},
 		"resource_type": []string{"0"},
 		"is_try":        []string{"-1"},
-		"token":         []string{r.token},
+		"token":         []string{r.Token},
 	}
 
 	req, err = newRequest(resourceListGet, strings.NewReader(data.Encode()))
@@ -151,9 +117,9 @@ func (r *Reptile) GetDetail(rid string) (c ResponseDetail, err error) {
 	)
 
 	data := url.Values{
-		"product_id":  []string{r.productID},
+		"product_id":  []string{r.ProductID},
 		"resource_id": []string{rid},
-		"token":       []string{r.token},
+		"token":       []string{r.Token},
 	}
 	req, err = newRequest(reousrceDetailGet, strings.NewReader(data.Encode()))
 	if err != nil {
@@ -198,18 +164,6 @@ func (r *Reptile) GetFullDetails() ([]Detail, error) {
 	return details, nil
 }
 
-func writeBigFile(name string, src io.Reader) error {
-	file, err := os.Create(name + ".tmp")
-	if err != nil {
-		return err
-	}
-	// 优化: 避免大文件读取到内存(如视频)
-	if _, err = io.Copy(file, src); err != nil {
-		return err
-	}
-	return os.Rename(name+".tmp", name)
-}
-
 // SaveVideo 通过详情下载视频，保存到本地
 func (r *Reptile) SaveVideo(details []Detail) error {
 	ch := make(chan struct{}, runtime.NumCPU())
@@ -240,7 +194,7 @@ func (r *Reptile) SaveVideo(details []Detail) error {
 			if err != nil {
 				panic(err)
 			}
-			_, err = r.c.Copy(v.Title, int64(total), file, resp.Body)
+			_, err = r.Copy(v.Title, int64(total), file, resp.Body)
 			if err != nil {
 				panic(err)
 			}
