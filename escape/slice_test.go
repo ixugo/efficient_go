@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-// TestBigSlice 创建超大的结合，会逃逸;
+// TestBigSlice 创建超大的组合，会逃逸;
 func TestBigSlice(t *testing.T) {
 	s := make([]int, 0, 1024*9)
 	for index, _ := range s {
