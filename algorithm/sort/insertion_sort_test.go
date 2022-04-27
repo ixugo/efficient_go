@@ -1,6 +1,8 @@
 package sort_test
 
-import "testing"
+import (
+	"testing"
+)
 
 // insertion1 插入排序
 // 此方法效率较低
