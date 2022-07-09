@@ -1,0 +1,408 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Wed May 18 19:35:01 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# environment
+VSCODE_LOG_NATIVE = false
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# environment
+rvm_path = /Users/xugo/.rvm
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# makefile
+ 
+CURDIR := /Users/xugo/Desktop/efficient_go/project
+# makefile (from `makefile', line 1)
+SHELL := /bin/bash
+# environment
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"42e84e0914b17800d483f69e299e1b00.zh-cn","_translationsConfigFile":"/Users/xugo/Library/Application Support/Code/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/tcf.json","_cacheRoot":"/Users/xugo/Library/Application Support/Code/clp/42e84e0914b17800d483f69e299e1b00.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/xugo/Library/Application Support/Code/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/da15b6fd3ef856477bf6f4fb29ba1b7af717770d","_corruptedFile":"/Users/xugo/Library/Application Support/Code/clp/42e84e0914b17800d483f69e299e1b00.zh-cn/corrupted.info","_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile (from `makefile', line 1)
+MAKEFILE_LIST :=  makefile
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+AUTOJUMP_SOURCED = 1
+# makefile (from `makefile', line 12)
+VERSION := 1.0
+# environment
+VSCODE_VERBOSE_LOGGING = true
+# environment
+__CFBundleIdentifier = com.microsoft.VSCode
+# environment
+INFOPATH = /opt/homebrew/share/info:
+# environment
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/14/f1m5mb4s5bb_wzdps5j3kp5c0000gn/T/vscode-ipc-b60c8e0b-c4ad-4504-ab8c-09ac630d87d0.sock
+# environment
+VSCODE_CWD = /
+# environment
+GOPROXY = https://proxy.golang.org,direct
+# environment
+PATH = /opt/homebrew/opt/ruby/bin:/Users/xugo/.gem/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/xugo/go/bin:/Users/xugo/Documents/flutter/bin:/Users/xugo/Library/Android/sdk:/Users/xugo/.rvm/bin
+# environment
+LSCOLORS = Gxfxcxdxbxegedabagacad
+# environment
+GOPATH = /Users/xugo/go
+# makefile (from `makefile', line 37)
+deployName := service-deploy
+# environment
+flutterRoot = /Users/xugo/Documents/flutter
+# environment
+VSCODE_LOG_STACK = false
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# environment
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.cx77f9KqoH/Listeners
+# automatic
+%F = $(notdir $%)
+# environment
+VSCODE_PIPE_LOGGING = true
+# environment
+rvm_bin_path = /Users/xugo/.rvm/bin
+# environment
+PWD = /Users/xugo/Desktop/efficient_go/project
+# environment
+HOMEBREW_CELLAR = /opt/homebrew/Cellar
+# environment
+GEM_HOME = /Users/xugo/.gem
+# environment
+ANRDOID_HOME = /Users/xugo/Library/Android/sdk
+# environment
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# environment
+MANPATH = /opt/homebrew/share/man::
+# environment
+GOMODCACHE = /Users/xugo/go/pkg/mod
+# environment
+HOME = /Users/xugo
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
+# environment
+VSCODE_CODE_CACHE_PATH = /Users/xugo/Library/Application Support/Code/CachedData/da15b6fd3ef856477bf6f4fb29ba1b7af717770d
+# environment
+LOGNAME = xugo
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+# environment
+ZSH = /Users/xugo/.oh-my-zsh
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+XPC_FLAGS = 0x0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+PUB_HOSTED_URL = https://pub.flutter-io.cn
+# default
+MAKE_VERSION := 3.81
+# environment
+USER = xugo
+# makefile
+.DEFAULT_GOAL := run
+# environment
+rvm_version = 1.29.12 (latest)
+# environment
+LESS = -R
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# default
+.VARIABLES := 
+# environment
+TMPDIR = /var/folders/14/f1m5mb4s5bb_wzdps5j3kp5c0000gn/T/
+# automatic
+*F = $(notdir $*)
+# environment
+VSCODE_IPC_HOOK = /Users/xugo/Library/Application Support/Code/1.67.1-main.sock
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.41167437.41167443
+# environment
+HOMEBREW_PREFIX = /opt/homebrew
+# environment
+FLUTTER_STORAGE_BASE_URL = https://storage.flutter-io.cn
+# automatic
++F = $(notdir $+)
+# environment
+HOMEBREW_REPOSITORY = /opt/homebrew
+# environment
+__CF_USER_TEXT_ENCODING = 0x1F5:0x19:0x34
+# environment
+COMMAND_MODE = unix2003
+# default
+MAKEFILES := 
+# automatic
+<F = $(notdir $<)
+# environment
+PAGER = less
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# environment
+rvm_prefix = /Users/xugo
+# default
+SUFFIXES := 
+# default
+.INCLUDE_DIRS = /usr/local/include
+# environment
+MAKELEVEL := 0
+# environment
+SHLVL = 1
+# environment
+AUTOJUMP_ERROR_PATH = /Users/xugo/Library/autojump/errors.log
+# environment
+LANG = C
+# environment
+VSCODE_PID = 64335
+# variable set hash-table stats:
+# Load=87/1024=8%, Rehash=0, Collisions=5/117=4%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 16777234, inode 40284332): 9 files, no impossibilities.
+
+# 9 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+all: service
+#  Command-line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/5=0%
+
+service:
+#  Implicit rule search has not been done.
+#  Implicit/static pattern stem: `'
+#  File does not exist.
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := service
+# automatic
+# % := 
+# automatic
+# * := 
+# automatic
+# + := 
+# automatic
+# | := 
+# automatic
+# < := 
+# automatic
+# ^ := 
+# automatic
+# ? := 
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/13=8%
+#  commands to execute (from `makefile', line 22):
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
+	go build -ldflags "-X main.build=$(VERSION)" -o service app/servcices/main.go
+	docker buildx build \
+	--platform=linux/amd64 \
+	-f config/docker/dockerfile \
+	-t service-amd64:$(VERSION) \
+	--build-arg BUILD_REF=$(VERSION) \
+	--build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S"` \
+	.
+	rm -r service
+	
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+mkube-apply:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 67):
+	cat config/k8s/base/service-pod/base_service.yaml | kubectl apply -f -
+	
+
+mkube-describe:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 81):
+	kubectl describe po -l app=service
+	
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  Last modified 2022-05-04 19:53:59
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+build:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 7):
+	go build -ldflags "-X main.build=local" app/servcices/main.go
+	
+
+mkube-install:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 41):
+	brew install kubectl
+	brew install minikube
+	
+
+mkube-status:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 55):
+	kubectl get nodes,svc -owide
+	kubectl get po -owide --watch -A
+	
+
+mkube-up:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 44):
+	minikube start \
+	--driver='docker' \
+	--image-mirror-country='cn' \
+	--image-repository='registry.cn-hangzhou.aliyuncs.com/google_containers'
+	kubectl config set-context --current --namespace service-system
+	
+
+mkube-down:
+ 
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 51):
+	minikube delete --all
+	
+
+mkube-update: all mkube-load mkube-restart
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+mkube-logs:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 76):
+	kubectl logs -l app=service --all-containers=true -f --tail=100
+	
+
+run:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 4):
+	go run app/servcices/main.go
+	
+
+mkube-restart:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 70):
+	kubectl rollout restart deploy $(deployName)
+	
+
+mkube-load:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 63):
+	minikube ssh "docker rmi -f service-amd64:$(VERSION)"
+	minikube image load service-amd64:$(VERSION)
+	
+
+mkube-service-delete:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 73):
+	cat config/k8s/base/service-pod/base_service.yaml | kubectl delete -f -
+	
+
+mkube-status-service:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 59):
+	kubectl get po -owide --watch
+	
+
+# files hash-table stats:
+# Load=19/1024=2%, Rehash=0, Collisions=0/37=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
+
+# Finished Make data base on Wed May 18 19:35:01 2022
+
+ 

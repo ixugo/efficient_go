@@ -13,6 +13,7 @@ import (
 	"time"
 )
 
+// 参考: https://go.dev/blog/context#TOC_3.2.
 // Need a key type.
 type myKey int
 
@@ -63,20 +64,21 @@ func TestDealline(t *testing.T) {
 		fmt.Println("work cancelled")
 	}
 }
+
 func TestWithValue(t *testing.T) {
 	traceID := "f47ac10b-58cc"
-	const traceIDKey = 0
+	ctx := context.WithValue(context.Background(), key, traceID)
+	withValue(ctx)
+}
 
-	ctx := context.WithValue(context.Background(), traceIDKey, traceID)
-
-	if uuid, ok := ctx.Value(traceIDKey).(string); ok {
+func withValue(ctx context.Context) {
+	if uuid, ok := ctx.Value(key).(string); ok {
 		fmt.Println(uuid)
 	}
-
 }
 
 func TestWithTimeout(t *testing.T) {
-	duration := 100 * time.Millisecond
+	const duration = 100 * time.Millisecond
 	ctx, cancel := context.WithTimeout(context.Background(), duration)
 	defer cancel()
 

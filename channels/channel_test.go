@@ -13,6 +13,7 @@ import (
 // waitForResult
 // waitForFinished
 
+// 把任务交过去
 func waitForTask() {
 	ch := make(chan string)
 
@@ -29,6 +30,7 @@ func waitForTask() {
 	fmt.Println("-------------end-------------")
 }
 
+// 等协程的结果
 func waitForResult() {
 	ch := make(chan string)
 	go func() {
@@ -43,6 +45,7 @@ func waitForResult() {
 	fmt.Println("-------------end-------------")
 }
 
+// 等待任务完成，
 func waitForFinished() {
 	ch := make(chan struct{})
 	go func() {

@@ -1,0 +1,1 @@
+{"buildTargets":["all","build","mkube-apply","mkube-describe","mkube-down","mkube-install","mkube-load","mkube-logs","mkube-restart","mkube-service-delete","mkube-status","mkube-status-service","mkube-up","mkube-update","run","service"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
