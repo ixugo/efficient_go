@@ -75,3 +75,14 @@ func inspectSlice(name string, arr []byte) {
 		fmt.Printf("[%d] %p\n", i, &arr[i])
 	}
 }
+
+// 测试对 nil 切片遍历
+func TestNilRange(t *testing.T) {
+
+	var a []int = nil
+
+	for _, v := range a {
+		fmt.Println(v)
+	}
+
+}
