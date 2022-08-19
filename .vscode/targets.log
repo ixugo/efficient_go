@@ -10,7 +10,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 make: *** No rule to make target `all'.  Stop.
 
 
-# Make data base, printed on Sat Jul  9 08:44:13 2022
+# Make data base, printed on Fri Aug 19 22:32:12 2022
 
 # Variables
 
@@ -18,8 +18,6 @@ make: *** No rule to make target `all'.  Stop.
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # environment
@@ -33,7 +31,7 @@ CURDIR := /Users/xugo/Desktop/efficient_go
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"bbca1a7059cee8a1b93da8947fee1c4f.zh-cn","_translationsConfigFile":"/Users/xugo/Library/Application Support/Code/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/tcf.json","_cacheRoot":"/Users/xugo/Library/Application Support/Code/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/xugo/Library/Application Support/Code/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/30d9c6cd9483b2cc586687151bcbcd635f373630","_corruptedFile":"/Users/xugo/Library/Application Support/Code/clp/bbca1a7059cee8a1b93da8947fee1c4f.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_translationsConfigFile":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/tcf.json","_cacheRoot":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile
@@ -43,17 +41,13 @@ VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 AUTOJUMP_SOURCED = 1
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
 INFOPATH = /opt/homebrew/share/info:
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/14/f1m5mb4s5bb_wzdps5j3kp5c0000gn/T/vscode-ipc-7b2305bd-f741-4de3-9b9c-19d110c6afef.sock
-# environment
 VSCODE_CWD = /
 # environment
-GOPROXY = https://proxy.golang.org,direct
+GOPROXY = https://goproxy.cn,direct
 # environment
 PATH = /opt/homebrew/opt/ruby/bin:/Users/xugo/.gem/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/xugo/go/bin:/Users/xugo/Documents/flutter/bin:/Users/xugo/Library/Android/sdk:/Users/xugo/.rvm/bin
 # environment
@@ -63,17 +57,14 @@ GOPATH = /Users/xugo/go
 # environment
 flutterRoot = /Users/xugo/Documents/flutter
 # environment
-VSCODE_LOG_STACK = false
-# environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.ZJD06Ws6RS/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.hzMFXvPQ5G/Listeners
+ 
 # automatic
 %F = $(notdir $%)
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 rvm_bin_path = /Users/xugo/.rvm/bin
 # environment
@@ -97,11 +88,11 @@ HOME = /Users/xugo
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/xugo/Library/Application Support/Code/CachedData/30d9c6cd9483b2cc586687151bcbcd635f373630
+VSCODE_CODE_CACHE_PATH = /Users/xugo/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LOGNAME = xugo
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 ZSH = /Users/xugo/.oh-my-zsh
 # environment
@@ -137,7 +128,9 @@ TMPDIR = /var/folders/14/f1m5mb4s5bb_wzdps5j3kp5c0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/xugo/Library/Application Support/Code/1.68.1-main.sock
+VSCODE_IPC_HOOK = /Users/xugo/Library/Application Support/Code/1.70.2-main.sock
+# environment
+MallocNanoZone = 0
 # makefile
 MAKEFLAGS = Rrqp
 # environment
@@ -145,7 +138,7 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.49864701.49864707
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.56838716.56838722
 # environment
 HOMEBREW_PREFIX = /opt/homebrew
 # environment
@@ -183,9 +176,9 @@ AUTOJUMP_ERROR_PATH = /Users/xugo/Library/autojump/errors.log
 # environment
 LANG = C
 # environment
-VSCODE_PID = 8466
+VSCODE_PID = 1718
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=4/106=4%
+# Load=81/1024=8%, Rehash=0, Collisions=4/102=4%
 
 # Pattern-specific Variable Values
 
@@ -193,9 +186,9 @@ VSCODE_PID = 8466
 
 # Directories
 
-# . (device 16777231, inode 33828989): 20 files, no impossibilities.
+# . (device 16777231, inode 33828989): 22 files, no impossibilities.
 
-# 20 files, no impossibilities in 1 directories.
+# 22 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -223,6 +216,7 @@ Makefile:
 #  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
 #  File does not exist.
+ 
 #  File has been updated.
 #  Failed to be updated.
 # variable set hash-table stats:
@@ -267,6 +261,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Sat Jul  9 08:44:13 2022
+# Finished Make data base on Fri Aug 19 22:32:12 2022
 
  

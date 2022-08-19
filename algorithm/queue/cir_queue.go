@@ -14,7 +14,7 @@ func NewCirQueue[T any](size uint8) *CirQueue[T] {
 	}
 }
 func (c *CirQueue[T]) Push(t T) {
-	if c.idx == c.size-1 {
+	if c.idx == c.size-1 && !c.over {
 		c.over = true
 	}
 
