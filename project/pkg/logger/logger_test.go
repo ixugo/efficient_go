@@ -3,6 +3,7 @@ package logger
 import "testing"
 
 func TestPrint(t *testing.T) {
-	// l := New("sd")
+	log, _ := InitJSONLogger("./")
+	log.Infow("a", "b", "c")
 
 }

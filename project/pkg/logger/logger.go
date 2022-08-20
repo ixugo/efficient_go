@@ -2,13 +2,50 @@ package logger
 
 import (
 	"os"
+	"path/filepath"
+	"time"
 
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
-	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func NewCustomEncoderConfig() zapcore.EncoderConfig {
+// New constructs a Sugared Logger that writes to stdout and
+// provides human-readable timestamps.
+// func New(service string) (*zap.SugaredLogger, error) {
+// 	config := zap.NewProductionConfig()
+// 	config.OutputPaths = []string{"stdout"}
+// 	config.EncoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+// 	config.DisableStacktrace = true
+// 	config.InitialFields = map[string]any{
+// 		"service": service,
+// 	}
+
+// 	log, err := config.Build()
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return log.Sugar(), nil
+// }
+
+func InitJSONLogger(logPath string) (*zap.SugaredLogger, error) {
+	config := zap.NewProductionEncoderConfig()
+	config.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05")
+	l, err := rotatelog(logPath)
+	if err != nil {
+		return nil, err
+	}
+	core := zapcore.NewCore(
+		zapcore.NewJSONEncoder(config),
+		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(l)),
+		zap.InfoLevel,
+	)
+	return zap.New(core).Sugar(), nil
+}
+
+// newCustomEncoderConfig 文本型日志
+func newTextConfig() zapcore.EncoderConfig {
 	return zapcore.EncoderConfig{
 		TimeKey:        "ts",
 		LevelKey:       "level",
@@ -25,13 +62,13 @@ func NewCustomEncoderConfig() zapcore.EncoderConfig {
 	}
 }
 
-func New(logPath string) {
+func NewTextLogger(logPath string) {
 	atom := zap.NewAtomicLevelAt(zap.DebugLevel)
-	l := lumber(logPath)
+	l, _ := rotatelog(logPath)
 
 	core := zapcore.NewCore(
-		zapcore.NewConsoleEncoder(NewCustomEncoderConfig()),
-		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(&l)),
+		zapcore.NewConsoleEncoder(newTextConfig()),
+		zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout), zapcore.AddSync(l)),
 		atom,
 	)
 	logger := zap.New(core, zap.AddCaller(), zap.Development())
@@ -40,13 +77,10 @@ func New(logPath string) {
 	// atom.SetLevel(zap)
 }
 
-func lumber(logPath string) lumberjack.Logger {
-	return lumberjack.Logger{
-		Filename:   logPath + "logs.log", // 日志文件路径
-		MaxSize:    1,                    // 单位 : m
-		MaxAge:     30,                   // 保留旧日志最大天数
-		MaxBackups: 30,                   // 保留最大旧文件数
-		LocalTime:  true,                 // 使用本地时间格式化
-		Compress:   false,                // 是否压缩
-	}
+func rotatelog(logPath string) (*rotatelogs.RotateLogs, error) {
+	return rotatelogs.New(
+		filepath.Join(logPath, "%Y%m%d_%H_%M_%S.log"),
+		rotatelogs.WithMaxAge(15*24*time.Hour),
+		rotatelogs.WithRotationTime(6*time.Hour),
+	)
 }
