@@ -42,15 +42,15 @@ func main() {
 		}
 
 		// I like always having a traceid present in the logs.
-		traceID := "00000000-0000-0000-0000-000000000000"
+		traceID := "xxxxxxxxxxxxx"
 		if v, ok := m["traceid"]; ok {
-			traceID = fmt.Sprintf("%v", v)
+			traceID = fmt.Sprintf("%d", v)
 		}
 
 		// Build out the know portions of the log in the order
 		// I want them in.
 		b.Reset()
-		b.WriteString(fmt.Sprintf("%s: %s: %s: %s: %s: %s: ",
+		b.WriteString(fmt.Sprintf("%s: %s: %s: %s: %v: %s: ",
 			m["service"],
 			m["ts"],
 			m["level"],

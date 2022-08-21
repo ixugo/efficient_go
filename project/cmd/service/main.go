@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"project/business/router"
 	"project/pkg/logger"
 	"project/pkg/server"
-	"project/service"
 	"runtime"
 	"syscall"
 
+	"net/http"
 	_ "net/http/pprof"
 
 	"go.uber.org/zap"
@@ -20,8 +21,11 @@ import (
 var build = "develop"
 
 func main() {
-
+	go PProf("6060")
 	log, err := logger.InitJSONLogger("./logs/")
+	log = log.With("service", "kennedy")
+	zap.ReplaceGlobals(log.Desugar())
+
 	if err != nil {
 		fmt.Println("Error ", err)
 		os.Exit(1)
@@ -32,7 +36,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	ser := server.New(service.SetupRouter(), server.ErrorLog(zap.NewStdLog(log.Desugar())))
+	ser := server.New(router.SetupRouter(log), server.ErrorLog(zap.NewStdLog(log.Desugar())))
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, syscall.SIGINT, syscall.SIGTERM)
@@ -49,7 +53,12 @@ func main() {
 }
 
 func run(log *zap.SugaredLogger) error {
-	log.Infow("start:", "GOMAXPROCS", runtime.GOMAXPROCS(0))
+	log.Infow("start", "GOMAXPROCS", runtime.GOMAXPROCS(0))
 	log.Infow("starting service", "version", build)
 	return nil
+}
+
+// PProf ...
+func PProf(port string) {
+	_ = http.ListenAndServe(":"+port, nil)
 }

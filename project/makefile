@@ -1,5 +1,17 @@
 SHELL := /bin/bash
 
+
+
+load-tooling:
+	go install github.com/divan/expvarmon
+	go install github.com/rakyll/hey
+
+expva:
+	expvarmon --ports=":6060" -vars="build,requests,goroutines,errors,panics,mem:memstats.Alloc"
+
+hey:
+	hey -m GET -c 100 -n 500 "http://localhost:8080/test"
+
 run:
 	go run cmd/service/main.go | go run cmd/tooling/logfmt/main.go
 

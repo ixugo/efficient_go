@@ -32,6 +32,7 @@ import (
 func InitJSONLogger(logPath string) (*zap.SugaredLogger, error) {
 	config := zap.NewProductionEncoderConfig()
 	config.EncodeTime = zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05")
+	config.NameKey = ""
 	l, err := rotatelog(logPath)
 	if err != nil {
 		return nil, err

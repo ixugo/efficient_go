@@ -1,0 +1,20 @@
+{"level":"info","ts":"2022-08-21 17:28:46","msg":"start:","GOMAXPROCS":10}
+{"level":"info","ts":"2022-08-21 17:28:46","msg":"starting service","version":"develop"}
+{"level":"info","ts":"2022-08-21 17:29:37","msg":"s(interrupt) := <-interrupt"}
+{"level":"info","ts":"2022-08-21 17:29:37","msg":"stopping service"}
+{"level":"info","ts":"2022-08-21 17:29:39","msg":"start:","GOMAXPROCS":10}
+{"level":"info","ts":"2022-08-21 17:29:39","msg":"starting service","version":"develop"}
+{"level":"info","ts":"2022-08-21 17:32:35","msg":"s(interrupt) := <-interrupt"}
+{"level":"info","ts":"2022-08-21 17:32:35","msg":"stopping service"}
+{"level":"info","ts":"2022-08-21 17:32:37","msg":"start:","service":"kennedy","GOMAXPROCS":10}
+{"level":"info","ts":"2022-08-21 17:32:37","msg":"starting service","service":"kennedy","version":"develop"}
+{"level":"info","ts":"2022-08-21 17:33:49","msg":"s(interrupt) := <-interrupt","service":"kennedy"}
+{"level":"info","ts":"2022-08-21 17:33:49","msg":"stopping service","service":"kennedy"}
+{"level":"info","ts":"2022-08-21 17:34:14","msg":"start:","service":"kennedy","GOMAXPROCS":10}
+{"level":"info","ts":"2022-08-21 17:34:14","msg":"starting service","service":"kennedy","version":"develop"}
+{"level":"info","ts":"2022-08-21 17:34:44","msg":"s(interrupt) := <-interrupt","service":"kennedy"}
+{"level":"info","ts":"2022-08-21 17:34:44","msg":"stopping service","service":"kennedy"}
+{"level":"info","ts":"2022-08-21 17:34:47","msg":"start","service":"kennedy","GOMAXPROCS":10}
+{"level":"info","ts":"2022-08-21 17:34:47","msg":"starting service","service":"kennedy","version":"develop"}
+{"level":"info","ts":"2022-08-21 17:34:54","msg":"s(interrupt) := <-interrupt","service":"kennedy"}
+{"level":"info","ts":"2022-08-21 17:34:54","msg":"stopping service","service":"kennedy"}
