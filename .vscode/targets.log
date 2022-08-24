@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Sun Aug 21 00:53:14 2022
+# Make data base, printed on Tue Aug 23 14:54:02 2022
 
 # Variables
 
@@ -58,7 +58,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.hzMFXvPQ5G/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.8YAWHCJmiY/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -172,7 +172,7 @@ AUTOJUMP_ERROR_PATH = /Users/xugo/Library/autojump/errors.log
 # environment
 LANG = C
 # environment
-VSCODE_PID = 30687
+VSCODE_PID = 80389
 # variable set hash-table stats:
 # Load=81/1024=8%, Rehash=0, Collisions=4/102=4%
 
@@ -182,7 +182,7 @@ VSCODE_PID = 30687
 
 # Directories
 
-# . (device 16777231, inode 33828989): 23 files, no impossibilities.
+# . (device 16777232, inode 33828989): 23 files, no impossibilities.
 
 # 23 files, no impossibilities in 1 directories.
 
@@ -256,7 +256,7 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Sun Aug 21 00:53:14 2022
+# Finished Make data base on Tue Aug 23 14:54:02 2022
 
  
 make: *** No rule to make target `all'.  Stop.

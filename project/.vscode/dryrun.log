@@ -1,5 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/xugo/Desktop/efficient_go/project'
-go run cmd/service/main.go | go run cmd/tooling/logfmt/main.go
+go install github.com/divan/expvarmon
+go install github.com/rakyll/hey
 make: Leaving directory `/Users/xugo/Desktop/efficient_go/project'
  

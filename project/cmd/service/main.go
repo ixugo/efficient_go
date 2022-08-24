@@ -3,7 +3,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"os/signal"
 	"project/business/router"
@@ -11,6 +13,7 @@ import (
 	"project/pkg/server"
 	"runtime"
 	"syscall"
+	"time"
 
 	"net/http"
 	_ "net/http/pprof"
@@ -20,8 +23,18 @@ import (
 
 var build = "develop"
 
+var (
+	pprofPort = flag.String("pprof", "", "pprof port, Empty strings are not enabled")
+)
+
 func main() {
-	go PProf("6060")
+	flag.Parse()
+	rand.Seed(time.Now().Unix())
+
+	if *pprofPort != "" {
+		go PProf(*pprofPort)
+	}
+
 	log, err := logger.InitJSONLogger("./logs/")
 	log = log.With("service", "kennedy")
 	zap.ReplaceGlobals(log.Desugar())

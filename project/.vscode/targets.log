@@ -7,7 +7,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 
 # This program built for i386-apple-darwin11.3.0
 
-# Make data base, printed on Sat Aug 20 14:57:10 2022
+# Make data base, printed on Wed Aug 24 10:56:50 2022
 
 # Variables
 
@@ -37,7 +37,7 @@ MAKEFILE_LIST :=  makefile
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
 AUTOJUMP_SOURCED = 1
-# makefile (from `makefile', line 12)
+# makefile (from `makefile', line 24)
 VERSION := 1.0
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
@@ -60,7 +60,7 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.hzMFXvPQ5G/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.8YAWHCJmiY/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
@@ -110,7 +110,7 @@ MAKE_VERSION := 3.81
 # environment
 USER = xugo
 # makefile
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL := load-tooling
 # environment
 rvm_version = 1.29.12 (latest)
 # environment
@@ -174,7 +174,7 @@ AUTOJUMP_ERROR_PATH = /Users/xugo/Library/autojump/errors.log
 # environment
 LANG = C
 # environment
-VSCODE_PID = 30687
+VSCODE_PID = 72897
 # variable set hash-table stats:
 # Load=82/1024=8%, Rehash=0, Collisions=4/112=4%
 
@@ -184,9 +184,9 @@ VSCODE_PID = 30687
 
 # Directories
 
-# . (device 16777231, inode 40284332): 11 files, no impossibilities.
+# . (device 16777232, inode 40284332): 13 files, no impossibilities.
 
-# 11 files, no impossibilities in 1 directories.
+# 13 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -227,7 +227,7 @@ service:
 # ? := 
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=1/13=8%
-#  commands to execute (from `makefile', line 22):
+#  commands to execute (from `makefile', line 34):
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
 	go build -ldflags "-X main.build=$(VERSION)" -o service app/servcices/main.go
 	docker buildx build \
@@ -246,10 +246,19 @@ service:
 #  Modification time never checked.
 #  File has not been updated.
 
+load-tooling:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 6):
+	go install github.com/divan/expvarmon
+	go install github.com/rakyll/hey
+	
+
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-19 23:27:02
+#  Last modified 2022-08-21 17:16:45
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -259,7 +268,7 @@ build:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 8):
+#  commands to execute (from `makefile', line 20):
 	go build -ldflags "-X main.build=local" app/servcices/main.go
 	
 
@@ -273,12 +282,29 @@ run:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `makefile', line 4):
+#  commands to execute (from `makefile', line 16):
 	go run cmd/service/main.go | go run cmd/tooling/logfmt/main.go
 	
 
+expva:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `makefile', line 10):
+	expvarmon --ports=":6060" -vars="build,requests,goroutines,errors,panics,mem:memstats.Alloc"
+	
+
+hey:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+ 
+#  commands to execute (from `makefile', line 13):
+	hey -m GET -c 100 -n 500 "http://localhost:8080/test"
+	
+
 # files hash-table stats:
-# Load=7/1024=1%, Rehash=0, Collisions=0/22=0%
+# Load=10/1024=1%, Rehash=0, Collisions=0/25=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -290,6 +316,6 @@ run:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Sat Aug 20 14:57:10 2022
+# Finished Make data base on Wed Aug 24 10:56:50 2022
 
  

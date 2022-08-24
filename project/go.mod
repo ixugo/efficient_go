@@ -6,19 +6,12 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	go.uber.org/zap v1.21.0
+	gorm.io/gorm v1.23.8
 )
 
 require (
-	github.com/antonholmquist/jason v1.0.0 // indirect
-	github.com/bsiegert/ranges v0.0.0-20111221115336-19303dc7aa63 // indirect
-	github.com/divan/expvarmon v0.0.0-20190204123027-8bf297f0fa5d // indirect
-	github.com/gizak/termui v0.0.0-20181228210747-b136f68f55f1 // indirect
-	github.com/golang-jwt/jwt/v4 v4.4.2 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
-	github.com/nsf/termbox-go v1.1.1 // indirect
-	github.com/pyk/byten v0.0.0-20140925233358-f847a130bf6d // indirect
-	github.com/rivo/uniseg v0.3.4 // indirect
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.4 // indirect
 )
 
 require (
