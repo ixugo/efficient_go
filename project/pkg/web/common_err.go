@@ -50,8 +50,8 @@ func (e *Error) Details() []string {
 	return e.details
 }
 
-// WithDetails 错误详情
-func (e *Error) WithDetails(args ...string) *Error {
+// With 错误详情
+func (e *Error) With(args ...string) *Error {
 	newErr := *e
 	newErr.details = make([]string, 0, len(args))
 	newErr.details = append(newErr.details, args...)
