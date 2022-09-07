@@ -15,6 +15,7 @@ var (
 	ErrUnauthorizedToken = NewError("UnauthorizedToken", "TOKEN 验证失败")
 	ErrJSON              = NewError("UnmarshalErr", "JSON 编解码出错")
 	ErrSystem            = NewError("SystemException", "系统异常")
+	ErrLimiter           = NewError("SystemLimit", "服务繁忙") // 限流
 )
 
 // Error ...
@@ -29,13 +30,13 @@ var codes = make(map[string]string, 8)
 // NewError 创建自定义错误
 func NewError(reason, msg string) *Error {
 	if _, ok := codes[reason]; ok {
-		panic(fmt.Sprintf("错误码 %d 已经存在，请更换一个", reason))
+		panic(fmt.Sprintf("错误码 %s 已经存在，请更换一个", reason))
 	}
 	codes[reason] = msg
 	return &Error{reason: reason, msg: msg}
 }
 
-// Code ..
+// Reason ..
 func (e *Error) Reason() string {
 	return e.reason
 }
@@ -70,6 +71,9 @@ func (e *Error) HTTPCode() int {
 		return http.StatusUnauthorized
 	case ErrSystem.reason:
 		return http.StatusInternalServerError
+	case ErrLimiter.reason:
+		return http.StatusServiceUnavailable
 	}
+
 	return http.StatusBadRequest
 }

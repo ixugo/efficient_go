@@ -15,7 +15,8 @@ func Logger(log *zap.SugaredLogger) gin.HandlerFunc {
 		c.Next()
 
 		code := c.Writer.Status()
-		if code == 200 {
+
+		if code >= 200 && code < 400 {
 			log.Infow(
 				"request completed",
 				"traceid", v.TraceID,
@@ -30,7 +31,7 @@ func Logger(log *zap.SugaredLogger) gin.HandlerFunc {
 
 		// 约定: 返回给客户端的错误，记录的 key 为 responseErr
 		err, _ := c.Get("responseErr")
-		log.Infow(
+		log.Warnf(
 			"request completed",
 			"traceid", v.TraceID,
 			"method", c.Request.Method,

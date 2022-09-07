@@ -20,11 +20,11 @@ func Firstly() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		id, _ := s.NextID()
-		c.Set(ValuesKey, &Values{
+		c.Set(valuesKey, &Values{
 			TraceID: id,
 			Now:     time.Now(),
 		})
-		c.Set(MetricsKey, m)
+		c.Set(metricsKey, m)
 		m.Requests.Add()
 		c.Next()
 	}

@@ -5,10 +5,10 @@ import (
 	"expvar"
 )
 
-// MetricsKey ...
-const MetricsKey = "MetricsKey"
+// metricsKey ...
+const metricsKey = "MetricsKey"
 
-type Int interface {
+type inter interface {
 	Add()
 }
 
@@ -16,7 +16,13 @@ type expvarInt struct {
 	i *expvar.Int
 }
 
+var e = make(map[string]struct{}, 4)
+
 func newExpvarInt(key string) *expvarInt {
+	_, exist := e[key]
+	if exist {
+		panic("metrics 存在相同的 Key")
+	}
 	return &expvarInt{i: expvar.NewInt(key)}
 }
 
@@ -26,10 +32,10 @@ func (e *expvarInt) Add() {
 
 // Metrics 监控指标
 type Metrics struct {
-	Goroutines Int
-	Requests   Int
-	Errors     Int
-	Panics     Int
+	Goroutines inter
+	Requests   inter
+	Errors     inter
+	Panics     inter
 }
 
 func newMetrics() *Metrics {
@@ -43,7 +49,7 @@ func newMetrics() *Metrics {
 
 // MustGetMetrics ...
 func MustGetMetrics(ctx context.Context) *Metrics {
-	m := ctx.Value(MetricsKey)
+	m := ctx.Value(metricsKey)
 	if m != nil {
 		return m.(*Metrics)
 	}
