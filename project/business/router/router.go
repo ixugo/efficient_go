@@ -13,7 +13,8 @@ func SetupRouter(log *zap.SugaredLogger) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Use(
-		mid.Firstly(),
+		mid.SetupTrace(),
+		mid.SetupMetrics(),
 		mid.Logger(log),
 		mid.Panics(),
 		mid.Limiter(200),

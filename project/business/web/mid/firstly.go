@@ -7,10 +7,16 @@ import (
 	"github.com/sony/sonyflake"
 )
 
-// Firstly 首个执行的中间件，设置一些相关参数，做后续铺垫
-func Firstly() gin.HandlerFunc {
+func SetupMetrics() gin.HandlerFunc {
 	m := newMetrics()
+	return func(c *gin.Context) {
+		c.Set(metricsKey, m)
+		m.Requests.Add()
+		c.Next()
+	}
+}
 
+func SetupTrace() gin.HandlerFunc {
 	s := sonyflake.NewSonyflake(sonyflake.Settings{
 		StartTime: time.Now(),
 		MachineID: func() (uint16, error) {
@@ -24,8 +30,6 @@ func Firstly() gin.HandlerFunc {
 			TraceID: id,
 			Now:     time.Now(),
 		})
-		c.Set(metricsKey, m)
-		m.Requests.Add()
 		c.Next()
 	}
 }
