@@ -9,7 +9,7 @@ import (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
-	r.GET("/", func(ctx *gin.Context) {
+	r.GET("/live", func(ctx *gin.Context) {
 		fmt.Println(ctx.Request.Host)
 		ctx.JSON(200, gin.H{"msg": "OK"})
 	})
