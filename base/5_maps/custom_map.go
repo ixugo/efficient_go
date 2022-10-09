@@ -8,6 +8,7 @@ func createRWLockMap(hint int) *customMap {
 	}
 }
 
+// Map ...
 type Map interface {
 	Set(k, v any)
 	Get(any) (any, bool)

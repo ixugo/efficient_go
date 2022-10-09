@@ -217,3 +217,19 @@ func cancellation() {
 func TestCancellation(t *testing.T) {
 	cancellation()
 }
+
+// 测试关闭 chan 后，for 循环，总是忘记
+func TestCloseChan(t *testing.T) {
+	ch := make(chan int, 5)
+	go func() {
+		ch <- 1
+		time.Sleep(50 * time.Millisecond)
+		ch <- 2
+		close(ch)
+	}()
+	for v := range ch {
+		fmt.Println(v)
+	}
+	fmt.Println("end")
+
+}

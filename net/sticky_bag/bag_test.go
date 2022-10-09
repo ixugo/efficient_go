@@ -13,6 +13,7 @@ import (
 	"time"
 )
 
+// 粘包
 func server(addr string) {
 	lis, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -22,7 +23,7 @@ func server(addr string) {
 	for {
 		conn, err := lis.Accept()
 		if err != nil {
-			panic(err)
+			return
 		}
 
 		go func(conn net.Conn) {
@@ -53,11 +54,13 @@ func server(addr string) {
 
 			// ==============3======================
 			b := bufio.NewReader(conn)
-			line, err := b.ReadString('\n')
-			if err != nil {
-				panic(err)
+			for {
+				line, err := b.ReadString('\n')
+				if err != nil {
+					return
+				}
+				fmt.Println(line)
 			}
-			fmt.Println(line)
 		}(conn)
 	}
 }
@@ -74,11 +77,10 @@ func TestStickyBag(t *testing.T) {
 	defer conn.Close()
 
 	for i := 0; i < 50; i++ {
-		_, err = conn.Write([]byte("[一个完整的数据包]" + strconv.Itoa(i)))
+		_, err = conn.Write([]byte("[一个完整的数据包]\n" + strconv.Itoa(i)))
 		if err != nil {
-			panic(err)
+			t.Fatal(err)
+			return
 		}
 	}
-
-	time.Sleep(2 * time.Second)
 }

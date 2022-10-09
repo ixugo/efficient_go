@@ -6,31 +6,31 @@ import (
 
 type PortConn struct {
 	net.Conn        // 网络连接
-	rs       []byte // 资源
+	resource []byte // 资源
 	readMore bool
 	start    int // 数组读到的位置
 }
 
-func newPortConn(conn net.Conn, rs []byte, readMore bool) *PortConn {
+func newPortConn(conn net.Conn, resource []byte, readMore bool) *PortConn {
 	return &PortConn{
 		Conn:     conn,
-		rs:       rs,
+		resource: resource,
 		readMore: readMore,
 	}
 }
 
 func (c *PortConn) Read(b []byte) (int, error) {
 	// 传入切片小于数据，则读多少内容
-	if l := len(b); l < len(c.rs)-c.start {
+	if l := len(b); l < len(c.resource)-c.start {
 		c.start += l
-		return copy(b, c.rs), nil
+		return copy(b, c.resource), nil
 	}
 
 	var n int
 	// 当前资源未读完，全部读完
-	if c.start < len(c.rs) {
-		c.start = len(c.rs)
-		n = copy(b, c.rs[c.start:])
+	if c.start < len(c.resource) {
+		c.start = len(c.resource)
+		n = copy(b, c.resource[c.start:])
 		if !c.readMore {
 			return n, nil
 		}
