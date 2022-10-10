@@ -1,6 +1,7 @@
 package struct_test
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 	"unsafe"
@@ -64,6 +65,10 @@ type account struct {
 
 // 两个属性相同的结构体互相赋值
 func TestSameStruct(t *testing.T) {
+	// var s1 struct1
+	// var s2 struct2
+	// if s1==s2 {}
+
 	b := balance{counter: 11}
 	a := account{counter: 22}
 
@@ -81,4 +86,28 @@ func TestSameStruct(t *testing.T) {
 	// 无需类型转换
 	a = c
 	t.Logf("\na:%v,%s\nb:%v,%s", a, reflect.TypeOf(a), c, reflect.TypeOf(c))
+}
+
+type People struct{}
+
+func (p *People) ShowA() {
+	fmt.Println("showA")
+	p.ShowB()
+}
+func (p *People) ShowB() {
+	fmt.Println("showB")
+}
+
+type Teacher struct {
+	People
+}
+
+func (t *Teacher) ShowB() {
+	fmt.Println("teacher showB")
+}
+
+func TestShowB(t *testing.T) {
+	teacher := Teacher{}
+	teacher.ShowB()
+	teacher.ShowA()
 }

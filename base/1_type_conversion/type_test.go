@@ -6,7 +6,7 @@ import (
 )
 
 // 定义别名
-type MyInt int64
+type Int int64
 
 // Go 语言没有隐式类型转换
 // 多算或少算一个字节，程序就会出问题

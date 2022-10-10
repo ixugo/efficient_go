@@ -1,8 +1,11 @@
 package escape
 
-import "testing"
+import (
+	"testing"
+)
 
 // TestGetPointer 函数返回指针，会逃逸
+// go test -gcflags "-m" ./func_test.go
 func TestGetPointer(t *testing.T) {
 	_ = getPointer()
 }

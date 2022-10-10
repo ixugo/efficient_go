@@ -2,15 +2,21 @@ package escape
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
+// go test -gcflags "-m" ./pointer_test.go
 func TestEscapePointer(t *testing.T) {
 	escapePointer()
 }
 
-// escapePointer 被已经逃逸变量引用的对象，会逃逸
+// escapePointer
 func escapePointer() {
-	str := 5
-	fmt.Println(str)
+	a := 5
+	reflect.TypeOf(a).Kind()
+	b := 9
+	reflect.ValueOf(b)
+	c := 10
+	fmt.Println(c)
 }
