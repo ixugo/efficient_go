@@ -7,10 +7,13 @@ import (
 )
 
 // TestAppend 输出扩容规则
+// 官方代码: https://github.com/golang/go/blob/master/src/runtime/slice.go#L181
 // Go 1.18 扩容规则，1.18 以前不一样。
 // 容量翻倍 < 所需容量，预估容量 = 所需容量
-// 	否则，< 256，双倍扩容
-// 	否则，2 倍扩容到 1.25 倍扩容平滑过渡
+//
+//	否则，< 256，双倍扩容
+//	否则，2 倍扩容到 1.25 倍扩容平滑过渡
+//
 // 最后，匹配内存规格 8 * (2 * x)，x 从 0 递增
 func TestAppend(t *testing.T) {
 	var (

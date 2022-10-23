@@ -18,7 +18,7 @@ func LocalIP() string {
 			continue
 		}
 
-		if net.IP.IsLoopback() {
+		if net.IP.IsMulticast() || net.IP.IsLoopback() || net.IP.IsLinkLocalMulticast() || net.IP.IsLinkLocalUnicast() {
 			continue
 		}
 
@@ -29,5 +29,4 @@ func LocalIP() string {
 		ip = v.String()
 	}
 	return ip
-
 }

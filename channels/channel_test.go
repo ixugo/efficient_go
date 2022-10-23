@@ -231,5 +231,20 @@ func TestCloseChan(t *testing.T) {
 		fmt.Println(v)
 	}
 	fmt.Println("end")
+}
 
+// TestTicker ticker.Stop() 不会关闭通道，所以不会退出 for 循环
+func TestTicker(t *testing.T) {
+	ticker := time.NewTicker(50 * time.Millisecond)
+	defer ticker.Stop()
+	var i int
+	for v := range ticker.C {
+		i++
+		fmt.Println(v)
+		time.Sleep(1 * time.Second)
+		if i >= 2 {
+			break
+		}
+	}
+	fmt.Println("end")
 }

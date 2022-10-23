@@ -24,3 +24,31 @@ func TestUser(t *testing.T) {
 	u.SetAge2(9)
 	fmt.Println(u.Age)
 }
+
+// TestForRange
+func TestForRange(t *testing.T) {
+	users := []*User{
+		{Age: 10},
+		{Age: 11},
+		{Age: 12},
+	}
+
+	fmt.Println(users)
+	for _, v := range users {
+		v.Age = 5
+	}
+	fmt.Println(users)
+}
+
+// TestForRange2
+func TestForRange2(t *testing.T) {
+	slice := []int{0, 1, 2, 3}
+	m := make(map[int]*int)
+
+	for i, val := range slice {
+		m[i] = &val
+	}
+	for k, v := range m {
+		fmt.Println(k, "->", *v)
+	}
+}

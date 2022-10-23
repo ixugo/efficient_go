@@ -62,5 +62,4 @@ func BenchmarkSyncmap(b *testing.B) {
 		m := concurrent_map.CreateConcurrentMapBenchmarkAdapter(1000)
 		benchmarkMap(b, m)
 	})
-
 }
