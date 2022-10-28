@@ -52,3 +52,17 @@ func TestForRange2(t *testing.T) {
 		fmt.Println(k, "->", *v)
 	}
 }
+
+// 全部都是值 Copy
+func TestPointer(t *testing.T) {
+	u := User{Age: 10}
+	c := &u
+
+	fmt.Println(c.Age)
+	b := *c
+	d := c
+	b.Age = 20
+	fmt.Println(c.Age)
+	fmt.Printf("%p\n", &c)
+	fmt.Printf("%p", &d)
+}

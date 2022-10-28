@@ -13,7 +13,7 @@ import (
 // waitForResult
 // waitForFinished
 
-// 把任务交过去
+// waitForTask 把任务交过去
 func waitForTask() {
 	ch := make(chan string)
 
@@ -30,7 +30,7 @@ func waitForTask() {
 	fmt.Println("-------------end-------------")
 }
 
-// 等协程的结果
+// waitForResult 等协程的结果
 func waitForResult() {
 	ch := make(chan string)
 	go func() {
@@ -101,7 +101,7 @@ func TestPooling(t *testing.T) {
 	pooling()
 }
 
-// 允许任意数量的 goroutine 执行
+// 扇出，允许任意数量的 goroutine 执行
 func fanOut() {
 	emps := 20
 	ch := make(chan string, emps)
@@ -216,35 +216,4 @@ func cancellation() {
 }
 func TestCancellation(t *testing.T) {
 	cancellation()
-}
-
-// 测试关闭 chan 后，for 循环，总是忘记
-func TestCloseChan(t *testing.T) {
-	ch := make(chan int, 5)
-	go func() {
-		ch <- 1
-		time.Sleep(50 * time.Millisecond)
-		ch <- 2
-		close(ch)
-	}()
-	for v := range ch {
-		fmt.Println(v)
-	}
-	fmt.Println("end")
-}
-
-// TestTicker ticker.Stop() 不会关闭通道，所以不会退出 for 循环
-func TestTicker(t *testing.T) {
-	ticker := time.NewTicker(50 * time.Millisecond)
-	defer ticker.Stop()
-	var i int
-	for v := range ticker.C {
-		i++
-		fmt.Println(v)
-		time.Sleep(1 * time.Second)
-		if i >= 2 {
-			break
-		}
-	}
-	fmt.Println("end")
 }
