@@ -65,4 +65,14 @@ func TestPointer(t *testing.T) {
 	fmt.Println(c.Age)
 	fmt.Printf("%p\n", &c)
 	fmt.Printf("%p", &d)
+
+	users := []*User{
+		{Age: 10},
+		{Age: 20},
+	}
+	for i := range users {
+		v := *users[i]
+		v.Age = 30
+	}
+
 }

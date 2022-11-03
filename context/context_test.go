@@ -137,5 +137,17 @@ func TestRequest(t *testing.T) {
 	defer resp.Body.Close()
 
 	// Write the response to stdout.
-	io.Copy(os.Stdout, resp.Body)
+	_, _ = io.Copy(os.Stdout, resp.Body)
+}
+
+func TestDeadLine(t *testing.T) {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	defer cancel()
+	deadline(ctx)
+}
+
+func deadline(ctx context.Context) {
+	// 截止日期时间和是否存在截止日期
+	d, ok := ctx.Deadline()
+	fmt.Println(ok, d)
 }

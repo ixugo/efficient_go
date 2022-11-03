@@ -43,7 +43,7 @@ func benchmarkMap(b *testing.B, hm Map) {
 
 const (
 	READER = 1000
-	WRITER = 10
+	WRITER = 100
 )
 
 func BenchmarkSyncmap(b *testing.B) {
