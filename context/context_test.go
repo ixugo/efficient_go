@@ -23,7 +23,6 @@ const key myKey = 0
 func TestCancel(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-
 	var wg sync.WaitGroup
 
 	for i := 0; i < 10; i++ {
@@ -36,7 +35,6 @@ func TestCancel(t *testing.T) {
 		}(i)
 	}
 
-	cancel()
 	wg.Wait()
 }
 

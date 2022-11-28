@@ -34,6 +34,7 @@ func main() {
 	// Create a logger value with a buffer of capacity
 	// for each goroutine that will be logging.
 	var d device
+	// l := logger.New(&d, grs)
 	l := logger.New(&d, grs)
 
 	// Generate goroutines, each writing to disk.

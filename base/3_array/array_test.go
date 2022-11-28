@@ -66,3 +66,14 @@ func TestArrayOfType(t *testing.T) {
 		fmt.Println(value)
 	}
 }
+
+func TestArray(t *testing.T) {
+	s := []int{1, 2, 3, 4, 5, 6}
+	b := make([]*int, len(s))
+	// i =>  index
+	// v =>  value
+	for i, v := range s {
+		b[i] = &v
+	}
+	fmt.Println(b)
+}

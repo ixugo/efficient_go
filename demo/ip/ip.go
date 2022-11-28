@@ -4,6 +4,7 @@ import (
 	"io"
 	"net"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -14,10 +15,14 @@ func LocalIP() string {
 		return ""
 	}
 	host, _, _ := net.SplitHostPort(conn.LocalAddr().(*net.UDPAddr).String())
-	if host == "" {
-		return localIP()
+	if host != "" {
+		return host
 	}
-	return host
+	iip := strings.Split(localIP()+"/", "/")
+	if len(iip) >= 2 {
+		return iip[0]
+	}
+	return ""
 }
 
 // localIP 获取本地 IP，遇到虚拟 IP 不准确
