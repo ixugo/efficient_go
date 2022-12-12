@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 	"unicode/utf8"
+	"unsafe"
 )
 
 const (
@@ -62,4 +63,14 @@ func BenchmarkBuilder(b *testing.B) {
 			builder.WriteString("string")
 		}
 	}
+}
+
+func TestPointerStr(t *testing.T) {
+	str := "Hello"
+	p := *(*[]byte)(unsafe.Pointer(&str))
+	q := *(*string)(unsafe.Pointer(&p))
+
+	fmt.Println(string(p), len(p), "cap:", cap(p))
+	fmt.Println(q)
+
 }
