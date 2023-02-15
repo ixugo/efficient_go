@@ -12,5 +12,4 @@ import "C"
 func main() {
 	s := C.CString("Hello world\n")
 	C.SayHello(s)
-
 }
