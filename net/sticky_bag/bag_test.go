@@ -77,7 +77,9 @@ func TestStickyBag(t *testing.T) {
 	defer conn.Close()
 
 	for i := 0; i < 50; i++ {
-		_, err = conn.Write([]byte("[一个完整的数据包]\n" + strconv.Itoa(i)))
+		conn.Write([]byte("[一个完"))
+		conn.Write([]byte("整的"))
+		_, err = conn.Write([]byte("数据包]\n" + strconv.Itoa(i)))
 		if err != nil {
 			t.Fatal(err)
 			return

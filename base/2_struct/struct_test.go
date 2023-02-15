@@ -111,3 +111,28 @@ func TestShowB(t *testing.T) {
 	teacher.ShowB()
 	teacher.ShowA()
 }
+
+type User struct {
+	Name   string
+	Age    int
+	Height int
+}
+
+type Manager struct {
+	Name   string
+	Height int
+}
+
+func TestConvert(t *testing.T) {
+	var u User
+	u.Name = "Nacy"
+	u.Height = 20
+	p := (*Manager)(unsafe.Pointer(&u))
+	p.Name = "123"
+	fmt.Println(u.Name)
+	m := *p
+	m.Name = "Asd"
+	fmt.Println(u.Name)
+	fmt.Printf("%p %p %p", &u, p, &m)
+	fmt.Printf("%+v\n", m)
+}

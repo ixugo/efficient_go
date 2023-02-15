@@ -1,6 +1,7 @@
 package escape
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -14,4 +15,29 @@ func TestGetPointer(t *testing.T) {
 func getPointer() *int {
 	a := 5
 	return &a
+}
+
+func TestGetPointer1(t *testing.T) {
+	_ = getPointer()
+}
+
+func TestDefer(t *testing.T) {
+	deferFunc()
+
+}
+
+func deferFunc() {
+	defer func() {
+		fmt.Println("1")
+	}()
+	defer func() {
+		a := 0
+		if a == 0 {
+			defer func() {
+				fmt.Println("2")
+			}()
+		}
+		fmt.Println("3")
+	}()
+	fmt.Println("4")
 }
