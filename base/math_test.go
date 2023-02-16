@@ -1,6 +1,9 @@
 package base
 
 import (
+	"encoding/json"
+	"fmt"
+	"io"
 	"testing"
 )
 
@@ -20,4 +23,13 @@ func TestMath1(t *testing.T) {
 		c = b
 	}
 	t.Log(c)
+}
+
+func TestError(t *testing.T) {
+	b, err := json.Marshal(io.EOF)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println(b)
+
 }

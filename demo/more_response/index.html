@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>test</title>
   </head>
   <body>
     <p>response</p>
@@ -12,9 +12,8 @@
   </body>
 
   <script>
-    const { readable, writable } = new TransformStream();
-
     // 参考: https://web.dev/i18n/zh/fetch-upload-streaming/
+    const { readable, writable } = new TransformStream();
     document.addEventListener("DOMContentLoaded", async function () {
       const response = await fetch("/aaa");
       const reader = response.body.getReader();
@@ -23,6 +22,7 @@
         if (done) break;
         const decoder = new TextDecoder("utf-8");
         const str = decoder.decode(value);
+        console.log("🚀 ~ file: index.html:25 ~ str", str);
         document.getElementById("output").innerHTML = str;
       }
     });

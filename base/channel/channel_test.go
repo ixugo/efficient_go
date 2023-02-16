@@ -97,3 +97,30 @@ func TestTicker(t *testing.T) {
 	}
 	fmt.Println("end")
 }
+
+// 当通道关闭时，ok =false
+// 直接判断值是否有效，不为零值即有效
+func TestChan(t *testing.T) {
+	ch := make(chan int, 10)
+	go func() {
+		time.Sleep(1 * time.Second)
+		for {
+			v, ok := <-ch
+			fmt.Println(ok)
+			fmt.Println(v)
+			// if !ok {
+			// 	return
+			// }
+		}
+	}()
+
+	for i := 1; i < 10; i++ {
+		if i == 5 {
+			ch <- i
+			// close(ch)
+			break
+		}
+		ch <- i
+	}
+	time.Sleep(time.Second * 3)
+}
