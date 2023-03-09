@@ -7,6 +7,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestLocalIP(t *testing.T) {
@@ -88,4 +90,41 @@ func TestMarshall(t *testing.T) {
 	u.B = append(u.B, []byte{'a', 'b'}...)
 	b, _ := json.Marshal(u)
 	fmt.Println(string(b))
+}
+
+func TestParseIP(t *testing.T) {
+	testCases := []struct {
+		desc     string
+		expected bool
+	}{
+		{
+			desc:     "",
+			expected: false,
+		},
+		{
+			desc:     "129.168.4.1",
+			expected: true,
+		},
+		{
+			desc:     "129.168.23.141",
+			expected: true,
+		},
+		{
+			desc:     "129.168.993.141",
+			expected: false,
+		},
+		{
+			desc:     "129.168.993.141:412",
+			expected: false,
+		},
+		{
+			desc:     "129.168.93.141:412",
+			expected: false,
+		},
+	}
+	for _, v := range testCases {
+		t.Run(v.desc, func(t *testing.T) {
+			require.EqualValues(t, net.ParseIP(v.desc) != nil, v.expected)
+		})
+	}
 }

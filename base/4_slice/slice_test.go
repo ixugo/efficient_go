@@ -170,13 +170,11 @@ func BenchmarkSlice2(b *testing.B) {
 
 func TestSlice2(t *testing.T) {
 	s1 := make([]int, 0, 10)
-
 	// Go 语言只有值传递
 	appendFunc := func(s []int) {
 		s = append(s, 10, 20, 30)
 		fmt.Println(s)
 	}
-
 	fmt.Println(s1)
 	appendFunc(s1)
 	fmt.Println(s1)

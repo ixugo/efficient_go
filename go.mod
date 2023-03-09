@@ -5,8 +5,10 @@ go 1.19
 require (
 	github.com/easierway/concurrent_map v1.0.0
 	github.com/gin-gonic/gin v1.8.1
+	github.com/gorilla/websocket v1.5.0
 	github.com/stretchr/testify v1.7.1
 	github.com/vbauerster/mpb/v7 v7.4.1
+	golang.org/x/exp v0.0.0-20230306221820-f0f767cdffd6
 	gorm.io/gorm v1.23.8
 )
 
@@ -27,6 +29,12 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.1 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
+	github.com/stretchr/codecs v0.0.0-20170403063245-04a5b1e1910d // indirect
+	github.com/stretchr/gomniauth v0.0.0-20170717123514-4b6c822be2eb // indirect
+	github.com/stretchr/objx v0.1.0 // indirect
+	github.com/stretchr/signature v0.0.0-20160104132143-168b2a1e1b56 // indirect
+	github.com/stretchr/stew v0.0.0-20130812190256-80ef0842b48b // indirect
+	github.com/stretchr/tracer v0.0.0-20140124184152-66d3696bba97 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
@@ -47,6 +55,6 @@ require (
 	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	golang.org/x/sys v0.0.0-20220405052023-b1e9470b6e64 // indirect
+	golang.org/x/sys v0.1.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
