@@ -105,4 +105,8 @@ func TestIsNotExist(t *testing.T) {
 	fmt.Println(os.IsNotExist(nil))
 	fmt.Println(os.IsNotExist(errors.New("123")))
 	fmt.Println(os.IsNotExist(os.ErrNotExist))
+
+	_, err := os.Stat("/Users/xugo/Documents/efficient_go/demo/upload/upload_test.go")
+	fmt.Println(os.IsNotExist(err))
+	fmt.Println(os.IsExist(err))
 }
