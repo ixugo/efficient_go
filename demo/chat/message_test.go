@@ -12,4 +12,5 @@ func TestMessage(t *testing.T) {
 	b, err := json.Marshal(newSystemMsg("Hello"))
 	require.NoError(t, err)
 	fmt.Println(string(b))
+	// 测试更新
 }
