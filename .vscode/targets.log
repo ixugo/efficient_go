@@ -6,8 +6,11 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
+make: *** No rule to make target `all'.  Stop.
 
-# Make data base, printed on Tue Aug 23 14:54:02 2022
+
+# Make data base, printed on Mon Apr 17 01:35:29 2023
 
 # Variables
 
@@ -15,20 +18,21 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
+# environment
+VSCODE_CRASH_REPORTER_PROCESS_TYPE = extensionHost
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
-# environment
-rvm_path = /Users/xugo/.rvm
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Users/xugo/Desktop/efficient_go
+CURDIR := /Users/xugo/Documents/efficient_go
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_translationsConfigFile":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/tcf.json","_cacheRoot":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/Users/xugo/Library/Application Support/Code/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/corrupted.info","_languagePackSupport":true}
+ 
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","osLocale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"b8e8c951dd5b5f651e028f8bda5e81eb.zh-cn","_translationsConfigFile":"/Users/xugo/Library/Application Support/Code/clp/b8e8c951dd5b5f651e028f8bda5e81eb.zh-cn/tcf.json","_cacheRoot":"/Users/xugo/Library/Application Support/Code/clp/b8e8c951dd5b5f651e028f8bda5e81eb.zh-cn","_resolvedLanguagePackCoreLocation":"/Users/xugo/Library/Application Support/Code/clp/b8e8c951dd5b5f651e028f8bda5e81eb.zh-cn/704ed70d4fd1c6bd6342c436f1ede30d1cff4710","_corruptedFile":"/Users/xugo/Library/Application Support/Code/clp/b8e8c951dd5b5f651e028f8bda5e81eb.zh-cn/corrupted.info","_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
 # makefile
@@ -36,61 +40,41 @@ MAKEFILE_LIST :=
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-AUTOJUMP_SOURCED = 1
-# environment
 __CFBundleIdentifier = com.microsoft.VSCode
-# environment
-INFOPATH = /opt/homebrew/share/info:
 # environment
 VSCODE_CWD = /
 # environment
 GOPROXY = https://goproxy.cn,direct
 # environment
-PATH = /opt/homebrew/opt/ruby/bin:/Users/xugo/.gem/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/Users/xugo/go/bin:/Users/xugo/Documents/flutter/bin:/Users/xugo/Library/Android/sdk:/Users/xugo/.rvm/bin
-# environment
-LSCOLORS = Gxfxcxdxbxegedabagacad
+PATH = /usr/local/go/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
 GOPATH = /Users/xugo/go
 # environment
-flutterRoot = /Users/xugo/Documents/flutter
+LaunchInstanceID = A7A280A4-289D-4776-A1CF-F68E11C21431
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.8YAWHCJmiY/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.PxCAXlUy4M/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-rvm_bin_path = /Users/xugo/.rvm/bin
-# environment
-PWD = /Users/xugo/Desktop/efficient_go
-# environment
-HOMEBREW_CELLAR = /opt/homebrew/Cellar
-# environment
-GEM_HOME = /Users/xugo/.gem
-# environment
-ANRDOID_HOME = /Users/xugo/Library/Android/sdk
+PWD = /Users/xugo/Documents/efficient_go
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
-# environment
-MANPATH = /opt/homebrew/share/man::
 # environment
 GOMODCACHE = /Users/xugo/go/pkg/mod
 # environment
 HOME = /Users/xugo
-# automatic
-+D = $(patsubst %/,%,$(dir $+))
 # default
 MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/xugo/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
+VSCODE_CODE_CACHE_PATH = /Users/xugo/Library/Application Support/Code/CachedData/704ed70d4fd1c6bd6342c436f1ede30d1cff4710
 # environment
 LOGNAME = xugo
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-ZSH = /Users/xugo/.oh-my-zsh
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -102,17 +86,13 @@ MAKE = $(MAKE_COMMAND)
 # default
 MAKECMDGOALS := all
 # environment
-PUB_HOSTED_URL = https://pub.flutter-io.cn
+SHLVL = 1
 # default
 MAKE_VERSION := 3.81
 # environment
 USER = xugo
 # makefile
 .DEFAULT_GOAL := 
-# environment
-rvm_version = 1.29.12 (latest)
-# environment
-LESS = -R
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
 # default
@@ -124,7 +104,7 @@ TMPDIR = /var/folders/14/f1m5mb4s5bb_wzdps5j3kp5c0000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/xugo/Library/Application Support/Code/1.70.2-main.sock
+VSCODE_IPC_HOOK = /Users/xugo/Library/Application Support/Code/1.77-main.sock
 # environment
 MallocNanoZone = 0
 # makefile
@@ -134,15 +114,11 @@ MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.56838716.56838722
-# environment
-HOMEBREW_PREFIX = /opt/homebrew
-# environment
-FLUTTER_STORAGE_BASE_URL = https://storage.flutter-io.cn
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.99533922.99533928
+# automatic
++D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
-# environment
-HOMEBREW_REPOSITORY = /opt/homebrew
 # environment
 __CF_USER_TEXT_ENCODING = 0x1F5:0x19:0x34
 # environment
@@ -152,13 +128,11 @@ MAKEFILES :=
 # automatic
 <F = $(notdir $<)
 # environment
-PAGER = less
-# environment
 LC_ALL = C
+# environment
+SECURITYSESSIONID = 186b4
 # automatic
 ^F = $(notdir $^)
-# environment
-rvm_prefix = /Users/xugo
 # default
 SUFFIXES := 
 # default
@@ -166,15 +140,11 @@ SUFFIXES :=
 # environment
 MAKELEVEL := 0
 # environment
-SHLVL = 1
-# environment
-AUTOJUMP_ERROR_PATH = /Users/xugo/Library/autojump/errors.log
-# environment
 LANG = C
 # environment
-VSCODE_PID = 80389
+VSCODE_PID = 784
 # variable set hash-table stats:
-# Load=81/1024=8%, Rehash=0, Collisions=4/102=4%
+# Load=64/1024=6%, Rehash=0, Collisions=2/85=2%
 
 # Pattern-specific Variable Values
 
@@ -182,9 +152,9 @@ VSCODE_PID = 80389
 
 # Directories
 
-# . (device 16777232, inode 33828989): 23 files, no impossibilities.
+# . (device 16777234, inode 33828989): 28 files, no impossibilities.
 
-# 23 files, no impossibilities in 1 directories.
+# 28 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -235,6 +205,7 @@ makefile:
 
 # Not a target:
 GNUmakefile:
+ 
 #  A default, MAKEFILES, or -include/sinclude makefile.
 #  Implicit rule search has been done.
 #  File does not exist.
@@ -256,8 +227,6 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Tue Aug 23 14:54:02 2022
+# Finished Make data base on Mon Apr 17 01:35:29 2023
 
  
-make: *** No rule to make target `all'.  Stop.
-

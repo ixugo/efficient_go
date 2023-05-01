@@ -7,15 +7,14 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 )
 
 const (
-	reousrceDetailGet = "https://www.hzmedia.com.cn/api/resource_detail_get.ashx" // 资源详情
-	resourceListGet   = "https://www.hzmedia.com.cn/api/resource_list_get.ashx"   // 资源列表
+	reousrceDetailGet = "https://cloud.cmpreading.com/api/resource_detail_get.ashx" // 资源详情
+	resourceListGet   = "https://cloud.cmpreading.com/api/resource_list_get.ashx"   // 资源列表
 )
 
 const (
@@ -58,7 +57,7 @@ func (r *Reptile) DetailsName() string {
 
 // VideoName 每集视频名称
 func (r *Reptile) VideoName(name string) string {
-	return r.ProductID + "/" + name
+	return strings.ReplaceAll(strings.TrimSpace(r.ProductID+"/"+name), "；", "_")
 }
 
 // GetFullList 获取该课程的全部列表
@@ -171,7 +170,7 @@ func (r *Reptile) GetFullDetails() ([]Detail, error) {
 
 // SaveVideo 通过详情下载视频，保存到本地
 func (r *Reptile) SaveVideo(details []Detail) error {
-	ch := make(chan struct{}, runtime.NumCPU())
+	ch := make(chan struct{}, 5)
 	var wg sync.WaitGroup
 	for i, v := range details {
 		ch <- struct{}{}

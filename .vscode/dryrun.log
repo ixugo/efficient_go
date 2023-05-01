@@ -1,6 +1,6 @@
 make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/xugo/Desktop/efficient_go'
-make: Leaving directory `/Users/xugo/Desktop/efficient_go'
+make: Entering directory `/Users/xugo/Documents/efficient_go'
+make: Leaving directory `/Users/xugo/Documents/efficient_go'
  
 make: *** No targets specified and no makefile found.  Stop.
 

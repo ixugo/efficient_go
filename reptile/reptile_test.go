@@ -11,17 +11,27 @@ import (
 )
 
 const (
-	productID1 = "p_5f0ff4f1e4b04349896c44dd" // 黑客网络应用
-	productID2 = "p_5f14fb95e4b0d73896b390bb" // 手把手教你 Linux
-	productID3 = "p_5f17c814e4b0a1003cae4503" // 企业渗透测试和持续监控视频教程
-	productID4 = "p_5f2b5572e4b073cc175693fc" // 安全渗透测试
-	productID5 = "p_5a5066704c531_c4SxiL3g"   // OKR目标管理法
-	token      = "61fc41edf2cdb44c72c636f1c34f9929"
+	productID1            = "p_5f0ff4f1e4b04349896c44dd" // 黑客网络应用
+	productID2            = "p_5f14fb95e4b0d73896b390bb" // 手把手教你 Linux
+	productID3            = "p_5f17c814e4b0a1003cae4503" // 企业渗透测试和持续监控视频教程
+	productID4            = "p_5f2b5572e4b073cc175693fc" // 安全渗透测试
+	productID5            = "p_5a5066704c531_c4SxiL3g"   // OKR目标管理法
+	ProductPython1        = "p_5f6b0c32e4b01b26d1bbdf50" // python 1
+	ProductPython2        = "p_6119daf0e4b0a27d0e3e1030" // python 2
+	ProductPython3        = "p_611a119ce4b0cce271be963c" // python 3
+	ProductPython4        = "p_611b6645e4b0cce271bf26ac" // python 4
+	ProductPython5        = "p_611c5f54e4b0bf6430075bdd" // python 5
+	ProductPythonRefactor = "p_5f474c17e4b0dd4d974b924e" // python 重构 无效
+	Product6              = "p_5f6b0997e4b01b26d1bbddfc" // 24 篇算法精讲
+	Product7              = "p_5f6b09bde4b0d59c87b7c88b" // 9 篇算法精讲
+	token                 = "7db64d135fea8e1f599a3f1724d2874d"
 )
+
+const currentProduct = ProductPythonRefactor
 
 // TestReptile 测试保存视频到本地
 func TestReptile(t *testing.T) {
-	r := NewReptile(productID5, token, bar.NewMpb())
+	r := NewReptile(currentProduct, token, bar.NewMpb())
 	details, err := r.GetFullDetails()
 	require.NoError(t, err)
 	err = r.SaveVideo(details)
@@ -37,18 +47,18 @@ func TestReadFile(t *testing.T) {
 	require.NoError(t, err)
 
 	count := len(data)
-	if count > 10 {
-		count = 10
-	}
-	r := NewReptile(productID5, token, bar.NewMpb())
+	// if count > 10 {
+	// count = 10
+	// }
+	r := NewReptile(currentProduct, token, bar.NewMpb())
 	err = r.SaveVideo(data[0:count])
 	require.NoError(t, err)
 }
 
 // TestGetDetail 测试获取一集视频的详情
 func TestGetDetail(t *testing.T) {
-	r := NewReptile(productID1, token, bar.NewMpb())
-	c, err := r.GetDetail("v_5f50a893e4b06a37e03981cb")
+	r := NewReptile(currentProduct, token, bar.NewMpb())
+	c, err := r.GetDetail("v_6119ce79e4b0cce271be6534")
 	require.NoError(t, err)
 	require.EqualValues(t, c.Code, 0, c.Msg)
 	t.Logf("%+v", c.Data)

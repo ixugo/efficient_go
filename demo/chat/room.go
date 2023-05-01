@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"net/http"
 	"strconv"
@@ -15,10 +16,14 @@ const (
 	messageBufferSize = 256
 )
 
-var upgrader = &websocket.Upgrader{ReadBufferSize: socketBufferSize,
-	WriteBufferSize: socketBufferSize}
-
 func (r *room) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	token := req.Header.Get("Sec-WebSocket-Protocol")
+	var upgrader = &websocket.Upgrader{
+		ReadBufferSize:  socketBufferSize,
+		WriteBufferSize: socketBufferSize,
+		Subprotocols:    []string{token},
+	}
+	fmt.Println(token)
 	socket, err := upgrader.Upgrade(w, req, nil)
 	if err != nil {
 		slog.Error("ServeHTTP", err)

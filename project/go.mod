@@ -1,6 +1,6 @@
 module project
 
-go 1.18
+go 1.20
 
 require (
 	github.com/dgrijalva/jwt-go/v4 v4.0.0-preview1
