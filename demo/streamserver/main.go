@@ -14,7 +14,7 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	r := gin.Default()
-	r.Use(Limiter())
+	// r.Use(Limiter())
 	r.GET("/test", func(ctx *gin.Context) {
 		time.Sleep(2 * time.Second)
 		ctx.JSON(200, gin.H{"msg": "SUCCESS"})
