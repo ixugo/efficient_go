@@ -15,6 +15,10 @@ const version = "v0.4"
 
 type Program struct{}
 
+// Start runs the program as a service.
+//
+// s:  a service.Service object that represents the program being run.
+// error: returns an error in case the program cannot be started.
 func (p *Program) Start(s service.Service) error {
 	go func() {
 		overseer.Run(overseer.Config{
