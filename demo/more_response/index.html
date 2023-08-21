@@ -14,8 +14,21 @@
   <script>
     // 参考: https://web.dev/i18n/zh/fetch-upload-streaming/
     const { readable, writable } = new TransformStream();
+    // document.addEventListener("DOMContentLoaded", async function () {
+    //   const response = await fetch("/aaa");
+    //   const reader = response.body.getReader();
+    //   while (true) {
+    //     const { value, done } = await reader.read();
+    //     if (done) break;
+    //     const decoder = new TextDecoder("utf-8");
+    //     const str = decoder.decode(value);
+    //     console.log("🚀 ~ file: index.html:25 ~ str", str);
+    //     document.getElementById("output").innerHTML = str;
+    //   }
+    // });
+
     document.addEventListener("DOMContentLoaded", async function () {
-      const response = await fetch("/aaa");
+      const response = await fetch("http://127.0.0.1/users/import");
       const reader = response.body.getReader();
       while (true) {
         const { value, done } = await reader.read();

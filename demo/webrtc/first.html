@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realtime communication with WebRTC</title>
+    <link rel="stylesheet" , href="css/client.css" />
+  </head>
+  <body>
+    <h1>Realtime communication with WebRTC</h1>
+    <video autoplay playsinline></video>
+    <button id="TakePhoto" onclick="onclick">Take</button>
+
+    <canvas id="picture"></canvas>
+  </body>
+
+  <script>
+    const mediaStreamContrains = {
+      video: {
+        frameRate: { min: 20 }, // 帧率最小值
+        width: { min: 640, ideal: 1280 }, // 最小宽度与理想宽度
+        height: { min: 360, ideal: 720 }, // 最小高度与理想高度
+        aspectRatio: 16 / 9, // 宽高比
+      },
+      audio: {
+        echoCancellation: true, // 回音消除
+        noiseSuppression: true, // 降噪
+        autoGainControl: true, // 自动增益
+      },
+    };
+
+    const localVideo = document.querySelector("video");
+
+    function gotLocalMediaStream(mediaStream) {
+      localVideo.srcObject = mediaStream;
+    }
+
+    function handleLocalMediaStreamError(error) {
+      console.log("navigator.getUserMedia error: ", error);
+    }
+
+    navigator.mediaDevices
+      .getUserMedia(mediaStreamContrains)
+      .then(gotLocalMediaStream)
+      .catch(handleLocalMediaStreamError);
+
+    var picture = document.querySelector("canvas#picture");
+    picture.width = 640;
+    picture.height = 480;
+
+    function onclick() {
+      picture
+        .getContext("2d")
+        .drawImage(videoplay, 0, 0, picture.width, picture.height);
+    }
+  </script>
+</html>

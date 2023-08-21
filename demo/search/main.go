@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var ip = flag.String("ip", "192.168.1.1", "ip地址")
+var ip = flag.String("ip", "192.168.2.1", "ip地址")
 
 type Body struct {
 	Version string

@@ -1,6 +1,11 @@
 package tdd
 
 import (
+	"bytes"
+	"fmt"
+	"io"
+	"net/url"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -31,4 +36,24 @@ func (p Portfolio) Add(money Money) Portfolio {
 
 func (p Portfolio) Evaluate(currency string) Money {
 	return Money{amount: 15, currency: "USD"}
+}
+
+func TestURLJoin(t *testing.T) {
+	s := filepath.Join("", "av/123.txt")
+	fmt.Println(s)
+
+	c, err := url.JoinPath("", "av/123.txt")
+	require.NoError(t, err)
+	fmt.Println("c", c)
+
+}
+
+func TestCopy(t *testing.T) {
+	s1 := bytes.NewBufferString("hello")
+	read := bytes.NewBufferString("")
+
+	_, err := io.Copy(read, s1)
+	fmt.Println(err)
+	fmt.Println(read.String())
+
 }

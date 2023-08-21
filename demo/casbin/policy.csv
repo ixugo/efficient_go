@@ -1,0 +1,5 @@
+p, 137df13e-e9, dedao, /admin/123, DELETE
+p, 1313e-e9, dedao, /aabc/123, DELETE
+p, 137df13e-e9, abcd, /admin/123, DELETE
+p, 137df13e-e9, abcd, /admin/123, GET
+g, 5234, 52342, dedao
