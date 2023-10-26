@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"testing"
 )
@@ -29,7 +30,8 @@ func TestIO(t *testing.T) {
 	read := io.TeeReader(reader, w)
 	b, _ := io.ReadAll(read)
 	fmt.Println(string(b))
-
+	s, _ := http.NewRequest(http.MethodPost, "/", nil)
+	s.Body = io.NopCloser(read)
 	// reads := io.MultiReader(buf, read))
 
 }

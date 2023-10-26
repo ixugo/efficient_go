@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"runtime"
 	"strconv"
+	"sync"
 	"testing"
 	"time"
 )
@@ -123,4 +124,47 @@ func TestChan(t *testing.T) {
 		ch <- i
 	}
 	time.Sleep(time.Second * 3)
+}
+
+func worker(id int, sem chan struct{}, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// Acquire semaphore
+	fmt.Printf("Worker %d: Waiting to acquire semaphore\n", id)
+	sem <- struct{}{}
+
+	// Do work
+	fmt.Printf("Worker %d: Semaphore acquired, running\n", id)
+	time.Sleep(1 * time.Second)
+
+	// Release semaphore
+	<-sem
+	fmt.Printf("Worker %d: Semaphore released\n", id)
+}
+
+// TestWorker 使用 channel 限制协程数量
+func TestWorker(t *testing.T) {
+	nWorkers := 10                   // Total number of goroutines
+	maxConcurrency := 2              // Allowed to run at the same time
+	batchInterval := 3 * time.Second // Delay between each batch of 2 goros
+
+	// Create a buffered channel with a capacity of maxConcurrency
+	sem := make(chan struct{}, maxConcurrency)
+
+	var wg sync.WaitGroup
+
+	// We start 10 goroutines but only 2 of them will run in parallel
+	for i := 1; i <= nWorkers; i++ {
+		wg.Add(1)
+		go worker(i, sem, &wg)
+
+		// Introduce a delay after each batch of workers
+		if i%maxConcurrency == 0 && i != nWorkers {
+			fmt.Printf("Waiting for batch interval...\n")
+			time.Sleep(batchInterval)
+		}
+	}
+	wg.Wait()
+	close(sem) // Remember to close the channel once done
+	fmt.Println("All workers have completed")
 }
