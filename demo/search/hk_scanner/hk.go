@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -11,7 +10,7 @@ import (
 	"time"
 )
 
-var ip = flag.String("ip", "192.168.20.1", "ip地址")
+var ip = flag.String("ip", "192.168.1.1", "ip地址")
 
 type Body struct {
 	Version string
@@ -43,14 +42,15 @@ func main() {
 					continue
 				}
 				defer resp.Body.Close()
-				if resp.StatusCode != 200 {
-					continue
+				if resp.StatusCode == 200 {
+					fmt.Println(v)
+					// continue
 				}
 				// var data Body
-				b, _ := io.ReadAll(resp.Body)
-				if strings.HasPrefix(string(b), `{"Languages"`) {
-					fmt.Printf("HK: %s\n", v)
-				}
+				// b, _ := io.ReadAll(resp.Body)
+				// if strings.HasPrefix(string(b), `{"Languages"`) {
+				// fmt.Printf("HK: %s\n", v)
+				// }
 				// if err := json.NewDecoder(resp.Body).Decode(&data); err == nil {
 				// 	if data.Version != "" {
 				// 		v := strings.TrimRight(v, "/healthcheck")
@@ -69,7 +69,8 @@ func main() {
 		value[3] = strconv.Itoa(i)
 		// ch <- fmt.Sprintf("http://%s:%s/healthcheck", strings.Join(value, "."), "80")
 		// ch <- fmt.Sprintf("http://%s:%s/healthcheck", strings.Join(value, "."), "8026")
-		ch <- fmt.Sprintf("http://%s:%s/doc/i18n/Languages.json", strings.Join(value, "."), "80")
+		// ch <- fmt.Sprintf("http://%s:%s/doc/i18n/Languages.json", strings.Join(value, "."), "80")
+		ch <- fmt.Sprintf("http://%s:%s", strings.Join(value, "."), "10000")
 		// ch <- fmt.Sprintf("http://%s:%s/healthcheck", strings.Join(value, "."), "8026")
 	}
 	close(ch)

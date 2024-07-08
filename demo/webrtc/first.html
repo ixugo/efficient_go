@@ -6,13 +6,21 @@
   </head>
   <body>
     <h1>Realtime communication with WebRTC</h1>
-    <video autoplay playsinline></video>
-    <button id="TakePhoto" onclick="onclick">Take</button>
+    <video height="85px" autoplay playsinline></video>
+    <button id="TakePhoto" onclick="onclick1123()">快照</button>
+    <!-- 快照显示 -->
+    <canvas id="picture" style="width: 100px"></canvas>
+    <button id="save" onclick="saveImg()">保存快照</button>
 
-    <canvas id="picture"></canvas>
+    <div style="height: 10px"></div>
+
+    <button id="record" onclick="startRecord()">开启录制视频</button>
+    <button id="recplay" disabled>回放录制</button>
+    <button id="download" disabled>下载录制视频</button>
   </body>
 
   <script>
+    // 打开摄像头和声音
     const mediaStreamContrains = {
       video: {
         frameRate: { min: 20 }, // 帧率最小值
@@ -29,27 +37,82 @@
 
     const localVideo = document.querySelector("video");
 
-    function gotLocalMediaStream(mediaStream) {
-      localVideo.srcObject = mediaStream;
-    }
-
-    function handleLocalMediaStreamError(error) {
-      console.log("navigator.getUserMedia error: ", error);
-    }
-
     navigator.mediaDevices
       .getUserMedia(mediaStreamContrains)
-      .then(gotLocalMediaStream)
-      .catch(handleLocalMediaStreamError);
+      .then((mediaStream) => {
+        // 设置 video 标签播放摄像头采集的内容
+        localVideo.srcObject = mediaStream;
+      })
+      .catch((error) => {
+        // 错误处理
+        console.log("navigator.getUserMedia error: ", error);
+      });
 
-    var picture = document.querySelector("canvas#picture");
+    const picture = document.querySelector("canvas#picture");
     picture.width = 640;
     picture.height = 480;
 
-    function onclick() {
-      picture
-        .getContext("2d")
-        .drawImage(videoplay, 0, 0, picture.width, picture.height);
+    // 图像抓拍
+    function onclick1123() {
+      picture.getContext("2d").drawImage(
+        localVideo, // 可以是一幅图片，或 HTMLVideoElement
+        0, // 图片的起点 x 坐标
+        0, // 图标的起点 y 坐标
+        picture.width,
+        picture.height
+      );
+    }
+
+    // 保存照片
+    function saveImg() {
+      downloadImg(picture.toDataURL("image/jpeg"));
+    }
+
+    // 保存照片
+    function downloadImg(url) {
+      var oA = document.createElement("a");
+      oA.download = "photo.jpeg"; // 设置下载的文件名
+      oA.href = url;
+      document.body.appendChild(oA);
+      oA.click();
+      oA.remove();
+    }
+
+    var buffer;
+
+    // 当该函数被触发后，将数据压入到 blob 中
+    function handleDataAvailable(e) {
+      if (e && e.data && e.data.size > 0) {
+        buffer.push(e.data);
+      }
+    }
+
+    function startRecord() {
+      buffer = [];
+
+      // 设置录制下来的多媒体格式
+      var options = {
+        mimeType: "video/webm;codecs=vp8",
+      };
+
+      // 判断浏览器是否支持录制
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        console.error(`${options.mimeType} is not supported!`);
+        return;
+      }
+
+      try {
+        // 创建录制对象
+        mediaRecorder = new MediaRecorder(localVideo.mediaStream, options);
+      } catch (e) {
+        console.error("Failed to create MediaRecorder:", e);
+        return;
+      }
+
+      // 当有音视频数据来了之后触发该事件
+      mediaRecorder.ondataavailable = handleDataAvailable;
+      // 开始录制
+      mediaRecorder.start(10);
     }
   </script>
 </html>

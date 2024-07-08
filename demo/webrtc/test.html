@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./jswebrtc.min.js"></script>
+  </head>
+  <body>
+    <h3>测试连接</h3>
+    <video width="500px" autoplay></video>
+
+    <script>
+      window.onload = function () {
+        console.log("🚀 ~ file: test.html:14 ~ onload:");
+
+        const pc = new RTCPeerConnection({
+          iceServers: [
+            {
+              urls: ["stun:stun.stunprotocol.org:3478"],
+            },
+          ],
+        });
+
+        pc.ontrack = function (event) {
+          console.log("track", event);
+          let v = document.getElementsByTagName("video");
+          v[0].srcObject = event.streams[0];
+        };
+
+        pc.oniceconnectionstatechange = function (event) {
+          console.log("iceconnectionstatechange", event);
+        };
+
+        pc.onicecandidate = function (event) {
+          console.log("🚀 ~ file: test.html:36 ~ event:", event);
+
+          if (event.candidate) {
+            console.log("candidate", event.candidate);
+          }
+        };
+
+        // pc.addTransceiver("audio", { direction: "recvonly" });
+        pc.addTransceiver("video", { direction: "sendrecv" });
+
+        pc.createOffer().then(function (offer) {
+          pc.setLocalDescription(offer).then((_) => {
+            var myHeaders = new Headers();
+            var raw = btoa(offer.sdp);
+            var requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow",
+            };
+
+            fetch(
+              "http://43.143.231.149:18082/rtc/44283956979379037",
+              requestOptions
+            )
+              .then((response) => response.text())
+              .then((result) => {
+                pc.setRemoteDescription(
+                  new RTCSessionDescription({
+                    sdp: atob(result),
+                    type: "answer",
+                  })
+                );
+              })
+              .catch((error) => console.log("error", error));
+          });
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -87,15 +87,41 @@ func countM3u8Duration(path string) (time.Duration, error) {
 }
 
 func TestM3u8(t *testing.T) {
-	p, err := m3u8.NewMediaPlaylist(3, 10)
+	p, err := m3u8.NewMediaPlaylist(10, 10)
 	if err != nil {
 		panic(err)
 	}
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 11; i++ {
 		if err := p.Append(fmt.Sprintf("test%d.ts", i), 3.0, ""); err != nil {
-			panic(err)
+			fmt.Println(err)
 		}
 	}
 	p.Close()
 	fmt.Println(p.Encode().String())
+}
+
+type S struct {
+	SD string
+	SM string
+}
+
+func TestAdd(t *testing.T) {
+	var m S
+	for i := 0; i < 10000; i++ {
+		var wg sync.WaitGroup
+		wg.Add(2)
+		go func() {
+			defer wg.Done()
+			_ = m.SD
+		}()
+		go func() {
+			defer wg.Done()
+			m.SD = "123"
+		}()
+		wg.Wait()
+	}
+
+	if m.SD != "123" {
+		t.Fatal(m.SD)
+	}
 }

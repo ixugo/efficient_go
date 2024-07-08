@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="startButton">Start Recording</button>
+    <button id="stopButton" disabled>Stop Recording</button>
+
+    <script>
+      let audioContext;
+      let mediaRecorder;
+      let websocket;
+
+      document
+        .getElementById("startButton")
+        .addEventListener("click", startRecording);
+      document
+        .getElementById("stopButton")
+        .addEventListener("click", stopRecording);
+
+      function startRecording() {
+        navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then((stream) => {
+            console.log("🚀 ~ .then ~ stream:", stream);
+            audioContext = new AudioContext();
+            const input = audioContext.createMediaStreamSource(stream);
+
+            websocket = new WebSocket("ws://127.0.0.1:8089/ws");
+            websocket.onopen = () => {
+              websocket.send("Hello, Server!");
+              console.log("WebSocket connected");
+              mediaRecorder = new MediaRecorder(stream);
+              mediaRecorder.ondataavailable = handleDataAvailable;
+              mediaRecorder.start();
+              document.getElementById("startButton").disabled = true;
+              document.getElementById("stopButton").disabled = false;
+            };
+          })
+          .catch((err) => {
+            console.error("Error accessing microphone:", err);
+          });
+      }
+
+      function stopRecording() {
+        if (mediaRecorder && mediaRecorder.state !== "inactive") {
+          mediaRecorder.stop();
+        }
+        document.getElementById("startButton").disabled = false;
+        document.getElementById("stopButton").disabled = true;
+        if (websocket && websocket.readyState === WebSocket.OPEN) {
+          websocket.close();
+        }
+        if (audioContext) {
+          audioContext.close();
+        }
+      }
+
+      function handleDataAvailable(event) {
+        if (websocket.readyState === WebSocket.OPEN) {
+          websocket.send(event.data);
+        }
+      }
+    </script>
+  </body>
+</html>

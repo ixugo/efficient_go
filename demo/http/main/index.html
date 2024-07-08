@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="req()">请求</button>
+  </body>
+
+  <script>
+    function req() {
+      const controller = new AbortController();
+      const signal = controller.signal;
+
+      const timeoutId = setTimeout(() => {
+        controller.abort();
+      }, 2000);
+
+      fetch(
+        "http://localhost:8000/devices/54ad376ddc6226f5dae6f15d4296bb22/ptz",
+        {
+          signal,
+          headers: {
+            Authorization: `Basic ${btoa("saida:Kvij4cV0CNy7qQLYdRoKeNUV")}`,
+          },
+        }
+      )
+        .then((response) => {
+          // 在这里处理响应
+          clearTimeout(timeoutId); // 成功获取响应时清除超时计时器
+          return response.json(); // 假设响应是 JSON 格式
+        })
+        .then((data) => {
+          // 在这里处理返回的数据
+        })
+        .catch((error) => {
+          if (error.name === "AbortError") {
+            // 请求被取消时的处理
+            console.log("请求超时");
+          } else {
+            // 其他错误的处理
+            console.error("发生错误", error);
+          }
+        });
+    }
+  </script>
+</html>
