@@ -2,6 +2,7 @@ package network
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net"
@@ -120,19 +121,33 @@ func TestDialTimeout(t *testing.T) {
 }
 
 func TestDialWithContext(t *testing.T) {
+	// 创建的上下文的截止时间为未来的五秒，之后上下文将自动取消
 	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(5*time.Second))
 	defer cancel()
 
 	var d net.Dialer
 	d.Control = func(network, address string, c syscall.RawConn) error {
-		time.Sleep(5 * time.Second * time.Millisecond)
+		time.Sleep(5*time.Second + time.Millisecond)
 		return nil
 	}
+	// 最后，将上下文作为第一个参数传递给DialContext函数
 	conn, err := d.DialContext(ctx, "tcp", "10.0.0.0:9902")
-	if err != nil {
-		panic(err)
+	if err == nil {
+		conn.Close()
+		t.Fatal("connnect should timeout")
 	}
-	_ = conn
+	nErr, ok := err.(net.Error)
+	if !ok {
+		t.Fatal("err:", err)
+	} else {
+		if !nErr.Timeout() {
+			fmt.Println("timeout:", err)
+		}
+	}
+	if ctx.Err() != context.DeadlineExceeded {
+		t.Errorf("expected deadline exceeded; actual: %v", ctx.Err())
+	}
+	fmt.Println("end")
 }
 
 // 并发 dial
@@ -195,7 +210,7 @@ func TestMultiple(t *testing.T) {
 
 func TestDeadline(t *testing.T) {
 	sync := make(chan struct{})
-	lis, err := net.Listen("tcp", ":")
+	lis, err := net.Listen("tcp", "127.0.0.1:")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -209,27 +224,35 @@ func TestDeadline(t *testing.T) {
 			conn.Close()
 			close(sync)
 		}()
+		// 设置 5 秒的读写超时
+		// 如果您在指定的时间内没有收到远程节点的消息，您可以假设远程节点已经消失并且您从未收到其 FIN 或者它处于空闲状态。
 		if err := conn.SetDeadline(time.Now().Add(5 * time.Second)); err != nil {
-			t.Error(err)
+			t.Error("err:", err)
 			return
 		}
 		buf := make([]byte, 1)
 		_, err = conn.Read(buf) // blocked until remote node sends data
-		nErr, ok := err.(net.Error)
-		if !ok || !nErr.Timeout() {
-			t.Error("exported timeout")
+		if err != nil {
+			nErr, ok := err.(net.Error)
+			if !ok || !nErr.Timeout() {
+				t.Error("exported timeout")
+			}
+			fmt.Println("err:", err)
 		}
 
 		sync <- struct{}{}
 
+		// 可以通过再次推迟截止日期来恢复连接对象的功能
 		if err := conn.SetDeadline(time.Now().Add(5 * time.Second)); err != nil {
 			t.Error(err)
 			return
 		}
 
-		_, err = conn.Read(buf)
+		n, err := conn.Read(buf)
 		if err != nil {
 			t.Error(err)
+		} else {
+			fmt.Println(string(buf[:n]))
 		}
 	}()
 
@@ -414,4 +437,86 @@ func TestPingerAdvanceDealine(t *testing.T) {
 	if end != 9*time.Second {
 		t.Fatalf("expected EOF at 9 seconds; actual %s", end)
 	}
+}
+
+// 三次握手
+// 65218 → 54321 [SYN] Seq=0 Win=65535 Len=0 MSS=16344 WS=64 TSval=3559524061 TSecr=0 SACK_PERM
+// 54321 → 65218 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=16344 WS=64 TSval=445334927 TSecr=3559524061 SACK_PERM EE0B=0 ECEB=0 EE1B=0
+// 65218 → 54321 [ACK, ACE=0] Seq=1 Ack=1 Win=408256 Len=0 TSval=3559524061 TSecr=445334927
+
+// [TCP Window Update] 54321 → 65218 [ACK, ACE=0] Seq=1 Ack=1 Win=408256 Len=0 TSval=445334927 TSecr=3559524061
+
+// 四次挥手
+// 65218 → 54321 [FIN, ACK, ACE=0] Seq=1 Ack=1 Win=408256 Len=0 TSval=3559524061 TSecr=445334927
+// 54321 → 65218 [ACK, ACE=0] Seq=1 Ack=2 Win=408256 Len=0 TSval=445334927 TSecr=3559524061
+// 54321 → 65218 [FIN, ACK, ACE=0] Seq=1 Ack=2 Win=408256 Len=0 TSval=445334927 TSecr=3559524061
+// 65218 → 54321 [ACK, ACE=0] Seq=2 Ack=2 Win=408256 Len=0 TSval=3559524061 TSecr=445334927
+func TestListener2(t *testing.T) {
+	// 在 IP 地址 127.0.0.1 上创建一个侦听器，客户端将连接到该侦听器。
+	// 省略了端口号，因此 Go 会为您随机选择一个可用的端口
+	l, err := net.Listen("tcp", "127.0.0.1:54321")
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+	done := make(chan struct{})
+	go func() {
+		defer func() {
+			done <- struct{}{}
+		}()
+
+		// 除非只接受单个传入连接，否则要使用 for 循环
+		for {
+			// 此方法将阻塞，直到侦听器检测到传入连接并完成客户端和服务器之间的 TCP 握手过程。
+			conn, err := l.Accept()
+			// 如果握手失败或侦听器关闭，则错误接口将为nil
+			// 此错误不一定是失败，因此您只需记录它并继续。
+			if err != nil {
+				if nErr, ok := err.(net.Error); ok && !nErr.Timeout() {
+					t.Log("超时错误")
+					return
+				}
+
+				t.Log("listener err:", err.Error())
+				return
+			}
+			fmt.Println("remote: ", conn.RemoteAddr())
+			// 为了同时处理客户端连接，您可以派生一个 goroutine 来异步处理每个连接
+			go func(c net.Conn) {
+				// 应当主动调用 close ，以确保优雅的而关闭
+				// 在 goroutine 退出之前调用连接的Close方法 ，通过向服务器发送 FIN 数据包来优雅地终止连接。
+				defer func() {
+					c.Close()
+					done <- struct{}{}
+				}()
+
+				// 它一次会从套接字读取最多 1024 个字节并记录它收到的内容
+				buf := make([]byte, 1024)
+				for {
+					n, err := c.Read(buf)
+					if err != nil {
+						fmt.Println("read err:", err)
+						// io.EOF错误，向侦听器代码表明您关闭了连接一侧。
+						if !errors.Is(err, io.EOF) {
+							t.Error("read err-:", err)
+						}
+						return
+					}
+					t.Logf("received: %q", buf[:n])
+				}
+			}(conn)
+		}
+	}()
+
+	fmt.Println("server:", l.Addr().String())
+	// 由于 IPv6 地址包含冒号分隔符，因此必须将 IPv6 地址括起来在方括号中。
+	// 例如， "[2001:ed27::1]:https"指定 IPv6 地址 2001:ed27::1 处的端口 443
+	conn, err := net.Dial("tcp", l.Addr().String())
+	if err != nil {
+		fmt.Println("dial err:", err)
+	}
+	fmt.Println("client conn close")
+	conn.Close()
+	<-done
+	l.Close()
+	<-done
 }

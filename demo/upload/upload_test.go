@@ -96,7 +96,6 @@ func server() *http.ServeMux {
 		_, _ = io.Copy(file, f)
 
 		_, _ = io.WriteString(w, t)
-
 	})
 	return m
 }
@@ -107,6 +106,14 @@ func TestIsNotExist(t *testing.T) {
 	fmt.Println(os.IsNotExist(os.ErrNotExist))
 
 	_, err := os.Stat("/Users/xugo/Documents/efficient_go/demo/upload/upload_test.go")
+	fmt.Println(err)
 	fmt.Println(os.IsNotExist(err))
 	fmt.Println(os.IsExist(err))
+
+	fmt.Println(">>>>>>>>>>>>>>>>>>")
+
+	// _, err = os.Stat("/Users/xugo/Documents/efficient_go/demo/upload/upload_test.go.go")
+	// fmt.Println(err)
+	// fmt.Println(os.IsNotExist(err))
+	// fmt.Println(os.IsExist(err))
 }

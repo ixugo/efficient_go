@@ -13,8 +13,7 @@ const (
 	lookupAddr = "127.0.0.1:4141"
 )
 
-type Handle struct {
-}
+type Handle struct{}
 
 func (m *Handle) HandleMessage(message *nsq.Message) error {
 	s := string(message.ID[:])
@@ -45,5 +44,4 @@ func TestConsumerError(t *testing.T) {
 
 	fmt.Println("OK")
 	time.Sleep(20 * time.Second)
-
 }

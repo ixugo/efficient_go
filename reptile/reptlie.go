@@ -133,6 +133,7 @@ func (r *Reptile) GetDetail(rid string) (c ResponseDetail, err error) {
 	if err != nil {
 		return
 	}
+	fmt.Println(">>>>>>>>>..", string(b))
 	err = json.Unmarshal(b, &c)
 	return
 }

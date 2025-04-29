@@ -1,69 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
+    <title>Simple Recorder.js demo with record, stop and pause</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <!-- 控制宽度的自动适应 -->
+    <style type="text/css">
+      .comments {
+        width: 100%; /*自动适应父布局宽度*/
+        overflow: auto;
+        word-break: break-all;
+        /*在ie中解决断行问题(防止自动变为在一行显示，主要解决ie兼容问题，ie8中当设宽度为100%时，文本域类容超过一行时，
+            当我们双击文本内容就会自动变为一行显示，所以只能用ie的专有断行属性“word-break或word-wrap”控制其断行)*/
+      }
+    </style>
   </head>
+
   <body>
-    <button id="startButton">Start Recording</button>
-    <button id="stopButton" disabled>Stop Recording</button>
+    <div id="controls">
+      <button id="recordButton">Record</button>
+      <button id="stopButton">Stop</button>
+    </div>
 
-    <script>
-      let audioContext;
-      let mediaRecorder;
-      let websocket;
-
-      document
-        .getElementById("startButton")
-        .addEventListener("click", startRecording);
-      document
-        .getElementById("stopButton")
-        .addEventListener("click", stopRecording);
-
-      function startRecording() {
-        navigator.mediaDevices
-          .getUserMedia({ audio: true })
-          .then((stream) => {
-            console.log("🚀 ~ .then ~ stream:", stream);
-            audioContext = new AudioContext();
-            const input = audioContext.createMediaStreamSource(stream);
-
-            websocket = new WebSocket("ws://127.0.0.1:8089/ws");
-            websocket.onopen = () => {
-              websocket.send("Hello, Server!");
-              console.log("WebSocket connected");
-              mediaRecorder = new MediaRecorder(stream);
-              mediaRecorder.ondataavailable = handleDataAvailable;
-              mediaRecorder.start();
-              document.getElementById("startButton").disabled = true;
-              document.getElementById("stopButton").disabled = false;
-            };
-          })
-          .catch((err) => {
-            console.error("Error accessing microphone:", err);
-          });
-      }
-
-      function stopRecording() {
-        if (mediaRecorder && mediaRecorder.state !== "inactive") {
-          mediaRecorder.stop();
-        }
-        document.getElementById("startButton").disabled = false;
-        document.getElementById("stopButton").disabled = true;
-        if (websocket && websocket.readyState === WebSocket.OPEN) {
-          websocket.close();
-        }
-        if (audioContext) {
-          audioContext.close();
-        }
-      }
-
-      function handleDataAvailable(event) {
-        if (websocket.readyState === WebSocket.OPEN) {
-          websocket.send(event.data);
-        }
-      }
-    </script>
+    <textarea id="textResult" class="comments" rows="10" cols="10"></textarea>
   </body>
+  <script type="text/javascript" src="./r.js"></script>
+  <script>
+    var ws = null; //实现WebSocket
+
+    var interval; // 定时器
+
+    let recorder = new Recorder({
+      sampleBits: 16, // 采样位数，支持 8 或 16，默认是16
+      sampleRate: 16000, // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，
+      numChannels: 1, // 声道，支持 1 或 2， 默认是1
+      // compiling: false,(0.x版本中生效,1.x增加中)  // 是否边录边转换，默认是false
+      compiling: true,
+    });
+
+    var recordButton = document.getElementById("recordButton");
+    var stopButton = document.getElementById("stopButton");
+    var textResult = document.getElementById("textResult");
+
+    recordButton.addEventListener("click", startRecording);
+    stopButton.addEventListener("click", stopRecording);
+
+    // 录音
+    function startRecording() {
+      console.log("recordButton clicked");
+      recorder.start().then(
+        () => {
+          // 开始录音
+          useWebSocket();
+        },
+        (error) => {
+          // 出错了
+          console.log(`出错了`);
+        }
+      );
+    }
+
+    // 停止录音
+    function stopRecording() {
+      console.log("stopButton clicked", recorder.getPCMBlob());
+
+      recorder.stop();
+
+      if (ws) {
+        ws.close();
+      }
+
+      clearInterval(interval);
+
+      textResult.innerText = "";
+
+      // recorder.getPCMBlob();
+      // recorder.downloadPCM('aaa');
+    }
+
+    /*
+     * WebSocket
+     */
+    function useWebSocket() {
+      // console.log(recorder.getNextData())
+      ws = new WebSocket("ws://" + window.location.host + "/ws");
+
+      ws.binaryType = "arraybuffer"; //传输的是 ArrayBuffer 类型的数据
+      ws.onopen = function () {
+        console.log("握手成功");
+        if (ws.readyState === 1) {
+          //ws进入连接状态，则每隔500毫秒发送一包数据
+          interval = setInterval(() => {
+            // recorder.getNextData();
+            // recorder.getWholeData();
+            // console.log(recorder.getNextData()); 可以将pcm 打印出来，查看pcm 的正确性
+            ws.send(recorder.getNextData());
+          }, 1000);
+        }
+      };
+
+      ws.onmessage = function (msg) {
+        var jsonStr = msg.data;
+        var json = JSON.parse(jsonStr);
+        textResult.innerText = json.msg;
+        autoTextarea(document.getElementById("textResult"));
+      };
+
+      ws.onerror = function (err) {
+        console.error(err);
+        textResult.innerText = "";
+      };
+
+      ws.onclose = function (msg) {
+        console.info(msg);
+        textResult.innerText = "";
+      };
+    }
+
+    /**
+     * 文本框根据输入内容自适应高度
+     * @param                {HTMLElement}        输入框元素
+     * @param                {Number}                设置光标与输入框保持的距离(默认0)
+     * @param                {Number}                设置最大高度(可选)
+     */
+    var autoTextarea = function (elem, extra, maxHeight) {
+      //判断elem是否为数组
+      if (elem.length > 0) {
+        for (var i = 0; i < elem.length; i++) {
+          e(elem[i]);
+        }
+      } else {
+        e(elem);
+      }
+
+      function e(elem) {
+        extra = extra || 0;
+        var isFirefox =
+            !!document.getBoxObjectFor || "mozInnerScreenX" in window,
+          isOpera =
+            !!window.opera && !!window.opera.toString().indexOf("Opera"),
+          addEvent = function (type, callback) {
+            elem.addEventListener
+              ? elem.addEventListener(type, callback, false)
+              : elem.attachEvent("on" + type, callback);
+          },
+          getStyle = elem.currentStyle
+            ? function (name) {
+                var val = elem.currentStyle[name];
+
+                if (name === "height" && val.search(/px/i) !== 1) {
+                  var rect = elem.getBoundingClientRect();
+                  return (
+                    rect.bottom -
+                    rect.top -
+                    parseFloat(getStyle("paddingTop")) -
+                    parseFloat(getStyle("paddingBottom")) +
+                    "px"
+                  );
+                }
+                return val;
+              }
+            : function (name) {
+                return getComputedStyle(elem, null)[name];
+              },
+          minHeight = parseFloat(getStyle("height"));
+
+        elem.style.resize = "none";
+
+        var change = function () {
+          var scrollTop,
+            height,
+            padding = 0,
+            style = elem.style;
+
+          if (elem._length === elem.value.length) return;
+          elem._length = elem.value.length;
+
+          if (!isFirefox && !isOpera) {
+            padding =
+              parseInt(getStyle("paddingTop")) +
+              parseInt(getStyle("paddingBottom"));
+          }
+          scrollTop =
+            document.body.scrollTop || document.documentElement.scrollTop;
+
+          elem.style.height = minHeight + "px";
+          if (elem.scrollHeight > minHeight) {
+            if (maxHeight && elem.scrollHeight > maxHeight) {
+              height = maxHeight - padding;
+              style.overflowY = "auto";
+            } else {
+              height = elem.scrollHeight - padding;
+              style.overflowY = "hidden";
+            }
+            style.height = height + extra + "px";
+            scrollTop += parseInt(style.height) - elem.currHeight;
+            document.body.scrollTop = scrollTop;
+            document.documentElement.scrollTop = scrollTop;
+            elem.currHeight = parseInt(style.height);
+          }
+        };
+
+        addEvent("propertychange", change);
+        addEvent("input", change);
+        addEvent("focus", change);
+        change();
+      }
+    };
+  </script>
 </html>

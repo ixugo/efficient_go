@@ -60,6 +60,7 @@ func waitForFinished() {
 	time.Sleep(1 * time.Second)
 	fmt.Println("-------------end-------------")
 }
+
 func TestWaitForTask(t *testing.T) {
 	waitForTask()
 }
@@ -214,6 +215,18 @@ func cancellation() {
 	time.Sleep(1 * time.Second)
 	fmt.Println("-------------end-------------")
 }
+
 func TestCancellation(t *testing.T) {
 	cancellation()
+}
+
+func TestCloseSendChan(t *testing.T) {
+	ch := make(chan string)
+	close(ch)
+
+	select {
+	case ch <- "test":
+	default:
+		fmt.Println("end")
+	}
 }

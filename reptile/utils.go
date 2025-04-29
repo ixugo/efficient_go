@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
 // writeFile 序列化并写入文件
@@ -36,15 +37,21 @@ func newRequest(url string, body io.Reader) (*http.Request, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Referer", "http://yd.hzmedia.com.cn/")
+	req.Header.Set("Referer", "https://servicewechat.com/wx99a836acd3f12e4d/28/page-frame.html")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) MicroMessenger/6.8.0(0x16080000) MacWechat/3.2.2(0x13020210) NetType/WIFI WindowsWechat")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.42(0x18002a32) NetType/4G Language/zh_CN")
+	// req.Header.Set("Accept-Encoding", "gzip,compress,br,deflate")
+	req.Header.Set("Host", "cloud.cmpreading.com")
 	return req, nil
+}
+
+var cli = http.Client{
+	Timeout: 5 * time.Second,
 }
 
 // do 发起网络请求
 func do(req *http.Request) ([]byte, error) {
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := cli.Do(req)
 	if err != nil {
 		return nil, err
 	}

@@ -2,7 +2,6 @@ package reptile
 
 import (
 	"encoding/json"
-
 	"os"
 	"testing"
 
@@ -24,10 +23,12 @@ const (
 	ProductPythonRefactor = "p_5f474c17e4b0dd4d974b924e" // python 重构 无效
 	Product6              = "p_5f6b0997e4b01b26d1bbddfc" // 24 篇算法精讲
 	Product7              = "p_5f6b09bde4b0d59c87b7c88b" // 9 篇算法精讲
-	token                 = "7db64d135fea8e1f599a3f1724d2874d"
+
+	Product8 = "p_5f335d21e4b075dc42ad36b7" // 网络课程
+	token    = "b95b4e1afd84d340bab337373b74a6b6"
 )
 
-const currentProduct = ProductPythonRefactor
+const currentProduct = Product8
 
 // TestReptile 测试保存视频到本地
 func TestReptile(t *testing.T) {
@@ -58,7 +59,7 @@ func TestReadFile(t *testing.T) {
 // TestGetDetail 测试获取一集视频的详情
 func TestGetDetail(t *testing.T) {
 	r := NewReptile(currentProduct, token, bar.NewMpb())
-	c, err := r.GetDetail("v_6119ce79e4b0cce271be6534")
+	c, err := r.GetDetail("v_5f34add7e4b075dc42ad7d1b")
 	require.NoError(t, err)
 	require.EqualValues(t, c.Code, 0, c.Msg)
 	t.Logf("%+v", c.Data)
